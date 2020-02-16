@@ -14,6 +14,8 @@ class Main extends Sprite
 	{
 		super();
 		
+		trace("Hello!");
+		
 		// Assets:
 		// openfl.Assets.getBitmapData("img/assetname.jpg");
 	}
