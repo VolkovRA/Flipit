@@ -893,9 +893,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","3");
+		_this.setReserved("build","4");
 	} else {
-		_this.h["build"] = "3";
+		_this.h["build"] = "4";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -4221,7 +4221,12 @@ openfl_display_Sprite.prototype = $extend(openfl_display_DisplayObjectContainer.
 });
 var Main = function() {
 	openfl_display_Sprite.call(this);
-	haxe_Log.trace("Hello!",{ fileName : "src/Main.hx", lineNumber : 17, className : "Main", methodName : "new"});
+	Main.model = new mvc_model_Model();
+	Main.controller = new mvc_controller_Controller();
+	Main.view = new mvc_view_View(Main.model,Main.controller);
+	this.addChild(Main.view);
+	Main.controller.run(Main.model,Main.view);
+	haxe_Log.trace("Version: " + Std.string(Settings.VERSION),{ fileName : "src/Main.hx", lineNumber : 47, className : "Main", methodName : "new"});
 };
 $hxClasses["Main"] = Main;
 Main.__name__ = "Main";
@@ -4330,6 +4335,9 @@ EReg.prototype = {
 	}
 	,__class__: EReg
 };
+var ErrorMessages = function() { };
+$hxClasses["ErrorMessages"] = ErrorMessages;
+ErrorMessages.__name__ = "ErrorMessages";
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
 HxOverrides.__name__ = "HxOverrides";
@@ -4493,6 +4501,34 @@ Reflect.makeVarArgs = function(f) {
 		return f(a);
 	};
 };
+var Version = function(major,minor,patch) {
+	if(patch == null) {
+		patch = 0;
+	}
+	if(minor == null) {
+		minor = 0;
+	}
+	if(major == null) {
+		major = 0;
+	}
+	this.major = major;
+	this.minor = minor;
+	this.patch = patch;
+};
+$hxClasses["Version"] = Version;
+Version.__name__ = "Version";
+Version.prototype = {
+	major: null
+	,minor: null
+	,patch: null
+	,toString: function() {
+		return this.major + "." + this.minor + "." + this.patch;
+	}
+	,__class__: Version
+};
+var Settings = function() { };
+$hxClasses["Settings"] = Settings;
+Settings.__name__ = "Settings";
 var Std = function() { };
 $hxClasses["Std"] = Std;
 Std.__name__ = "Std";
@@ -23638,7 +23674,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 903736;
+	this.version = 282287;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -26288,6 +26324,100 @@ lime_utils__$UInt8ClampedArray_UInt8ClampedArray_$Impl_$._clamp = function(_in) 
 		return _out;
 	}
 };
+var mvc_controller_AController = function(controller) {
+	this.controller = null;
+	if(controller == null) {
+		throw new js__$Boot_HaxeError(new openfl_errors_Error("Не передана ссылка на главный, игровой контроллер"));
+	}
+	this.controller = controller;
+};
+$hxClasses["mvc.controller.AController"] = mvc_controller_AController;
+mvc_controller_AController.__name__ = "mvc.controller.AController";
+mvc_controller_AController.prototype = {
+	controller: null
+	,__class__: mvc_controller_AController
+};
+var mvc_controller_Controller = function() {
+	this.view = null;
+	this.model = null;
+	mvc_controller_AController.call(this,this);
+};
+$hxClasses["mvc.controller.Controller"] = mvc_controller_Controller;
+mvc_controller_Controller.__name__ = "mvc.controller.Controller";
+mvc_controller_Controller.__super__ = mvc_controller_AController;
+mvc_controller_Controller.prototype = $extend(mvc_controller_AController.prototype,{
+	model: null
+	,view: null
+	,run: function(model,view) {
+		if(model == null) {
+			throw new js__$Boot_HaxeError(new openfl_errors_Error("model - " + "Значение не может быть null"));
+		}
+		if(view == null) {
+			throw new js__$Boot_HaxeError(new openfl_errors_Error("view - " + "Значение не может быть null"));
+		}
+		this.model = model;
+		this.view = view;
+	}
+	,__class__: mvc_controller_Controller
+});
+var mvc_model_AModel = function(model) {
+	this.model = null;
+	if(model == null) {
+		throw new js__$Boot_HaxeError(new openfl_errors_Error("Не передана ссылка на главную игровую модель"));
+	}
+	this.model = model;
+};
+$hxClasses["mvc.model.AModel"] = mvc_model_AModel;
+mvc_model_AModel.__name__ = "mvc.model.AModel";
+mvc_model_AModel.prototype = {
+	model: null
+	,__class__: mvc_model_AModel
+};
+var mvc_model_Model = function() {
+	mvc_model_AModel.call(this,this);
+};
+$hxClasses["mvc.model.Model"] = mvc_model_Model;
+mvc_model_Model.__name__ = "mvc.model.Model";
+mvc_model_Model.__super__ = mvc_model_AModel;
+mvc_model_Model.prototype = $extend(mvc_model_AModel.prototype,{
+	__class__: mvc_model_Model
+});
+var mvc_view_AView = function(view) {
+	this.view = null;
+	openfl_display_Sprite.call(this);
+	if(view == null) {
+		throw new js__$Boot_HaxeError(new openfl_errors_Error("Не передана ссылка на главный, игровой визуализатор"));
+	}
+	this.view = view;
+};
+$hxClasses["mvc.view.AView"] = mvc_view_AView;
+mvc_view_AView.__name__ = "mvc.view.AView";
+mvc_view_AView.__super__ = openfl_display_Sprite;
+mvc_view_AView.prototype = $extend(openfl_display_Sprite.prototype,{
+	view: null
+	,__class__: mvc_view_AView
+});
+var mvc_view_View = function(model,controller) {
+	this.controller = null;
+	this.model = null;
+	mvc_view_AView.call(this,this);
+	if(model == null) {
+		throw new js__$Boot_HaxeError(new openfl_errors_Error("model - " + "Значение не может быть null"));
+	}
+	if(this.view == null) {
+		throw new js__$Boot_HaxeError(new openfl_errors_Error("view - " + "Значение не может быть null"));
+	}
+	this.model = model;
+	this.controller = controller;
+};
+$hxClasses["mvc.view.View"] = mvc_view_View;
+mvc_view_View.__name__ = "mvc.view.View";
+mvc_view_View.__super__ = mvc_view_AView;
+mvc_view_View.prototype = $extend(mvc_view_AView.prototype,{
+	model: null
+	,controller: null
+	,__class__: mvc_view_View
+});
 var openfl_Lib = function() { };
 $hxClasses["openfl.Lib"] = openfl_Lib;
 openfl_Lib.__name__ = "openfl.Lib";
@@ -72986,6 +73116,8 @@ openfl_display_DisplayObject.__tempStack = new lime_utils_ObjectPool(function() 
 },function(stack) {
 	stack.set_length(0);
 });
+ErrorMessages.NULL = "Значение не может быть null";
+Settings.VERSION = new Version(0,0,1);
 haxe_Serializer.USE_CACHE = false;
 haxe_Serializer.USE_ENUM_INDEX = false;
 haxe_Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
