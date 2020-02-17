@@ -1,13 +1,14 @@
 package mvc.model;
 
 import openfl.errors.Error;
+import openfl.events.EventDispatcher;
 
 /**
  * Модель.
  * Абстрактный, базовый класс всех игровых моделей.
  * @author VolkovRA
  */
-class AModel 
+class AModel extends EventDispatcher
 {
 	/**
 	 * Главная модель.
@@ -20,6 +21,8 @@ class AModel
 	 * @param	model Главная, игровая модель.
 	 */
 	public function new(model:Model) {
+		super();
+		
 		if (model == null)
 			throw new Error("Не передана ссылка на главную игровую модель");
 		

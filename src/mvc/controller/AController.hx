@@ -1,13 +1,14 @@
 package mvc.controller;
 
 import openfl.errors.Error;
+import openfl.events.EventDispatcher;
 
 /**
  * Контроллер.
  * Абстрактный, базовый класс все игровых контроллеров.
  * @author VolkovRA
  */
-class AController 
+class AController extends EventDispatcher
 {
 	/**
 	 * Главный контроллер.
@@ -20,6 +21,8 @@ class AController
 	 * @param	controller Главный контроллер.
 	 */
 	public function new(controller:Controller) {
+		super();
+		
 		if (controller == null)
 			throw new Error("Не передана ссылка на главный, игровой контроллер");
 		
