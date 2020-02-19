@@ -1,4 +1,4 @@
-package mvc.model.field;
+package mvc.model.board;
 
 import haxe.ds.Vector;
 import mvc.model.AModel;

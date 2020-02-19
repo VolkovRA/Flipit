@@ -1,13 +1,13 @@
-package mvc.model.data.level;
+package mvc.model.data.progress;
 
 import mvc.model.Model;
 import mvc.model.data.DataList;
 
 /**
- * Список данных игровых уровней.
+ * Список данных игрового прогресса.
  * @author VolkovRA
  */
-class LevelDataList extends DataList<LevelData> 
+class ProgressDataList extends DataList<ProgressData> 
 {
 	/**
 	 * @inheritDoc

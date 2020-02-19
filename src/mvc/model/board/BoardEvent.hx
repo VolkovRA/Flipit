@@ -34,7 +34,7 @@ class BoardEvent extends Event
 	 * Позиция фишки по Y.
 	 * Значение используется для событий: BoardEvent.CHIP_STATE.
 	 */
-	public var y:Int
+	public var y:Int;
 	
 	/**
 	 * Создать событие игрового поля.

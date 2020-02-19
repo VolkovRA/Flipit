@@ -1,8 +1,9 @@
-package mvc.model;
+package mvc.model.data;
 
 /**
  * ID Сущности.
  * Целочисленное число, которое не может быть меньше 0.
+ * Используется для однозначной идентификации ресурса.
  * @author VolkovRA
  */
 typedef ID = UInt;

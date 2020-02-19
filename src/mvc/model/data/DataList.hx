@@ -1,4 +1,4 @@
-package mvc.model.data.list;
+package mvc.model.data;
 
 import mvc.model.AModel;
 import mvc.model.Model;

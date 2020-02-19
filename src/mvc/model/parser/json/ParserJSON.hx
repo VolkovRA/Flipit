@@ -8,7 +8,13 @@ import mvc.model.Model;
 import mvc.model.board.ChipState;
 import mvc.model.data.GameData;
 import mvc.model.data.board.BoardData;
+import mvc.model.data.board.BoardDataList;
 import mvc.model.data.level.LevelData;
+import mvc.model.data.level.LevelDataList;
+import mvc.model.data.player.PlayerData;
+import mvc.model.data.player.PlayerDataList;
+import mvc.model.data.progress.ProgressData;
+import mvc.model.data.progress.ProgressDataList;
 import openfl.errors.Error;
 
 /**
@@ -17,8 +23,11 @@ import openfl.errors.Error;
  */
 class ParserJSON extends AModel 
 {
-	static private inline var KEY_LEVELS:String		= "levels";
-	static private inline var KEY_BOARDS:String		= "boards";
+	static private inline var KEY_VERSION:String		= "version";
+	static private inline var KEY_LEVELS:String			= "levels";
+	static private inline var KEY_BOARDS:String			= "boards";
+	static private inline var KEY_PLAYERS:String		= "players";
+	static private inline var KEY_PROGRESS:String		= "progress";
 	
 	/**
 	 * Создать парсер.
@@ -31,14 +40,14 @@ class ParserJSON extends AModel
 	/**
 	 * Прочитать игровые данные из формата JSON.
 	 * Считывает данные из переданной строки и записывает их в указанный объект GameData, либо создаёт новый, если он не передан.
-	 * Переданный объект GameData очищается. (Вызов clear())
 	 * @param	str Строка игровых данных в формате JSON.
-	 * @param	to Объект для записи, если null - создаётся новый объект.
-	 * @return	Прочитанные, игровые данные.
+	 * @param	to Объект для записи, если null - создаётся новый объект, иначе данные пишутся (добавляются) в переданный.
+	 * @param	options Опций разбора, если null - будут прочитаны все имеющиеся данные, иначе только отмеченные флагом true.
+	 * @return	Игровые данные.
 	 */
-	public function read(str:String, to:GameData = null):GameData {
+	public function read(str:String, to:GameData = null, options:ParserOptions = null):GameData {
 		if (str == null)
-			throw new Error("Игровые данные для разбора не должны быть null");
+			throw new Error("Игровые данные для чтения не должны быть null");
 		if (to == null)
 			to = new GameData(model);
 		
@@ -49,14 +58,65 @@ class ParserJSON extends AModel
 			str = null; // <- Чтоб не занимал память
 		}
 		catch (err:Dynamic) {
-			throw new Error("Ошибка чтения игровых данных - невалидный JSON\n" + Std.string(err));
+			throw new Error("Ошибка чтения игровых данных, невалидный JSON\n" + Std.string(err));
 		}
 		
+		// Проверка версии:
+		if (!data.exists(KEY_VERSION))
+			throw new Error("Ошибка чтения игровых данных, отсутствуют данные версии (" + KEY_VERSION + ")");
+		
+		var version:Version = Version.fromString(data[KEY_VERSION]);
+		if (version.major < Settings.VERSION.major)
+			throw new Error("Ошибка чтения игровых данных, версия загружаемых данных устарела и не совместима с текущей версией игры");
+		
 		// Чтение списков:
-		if (data.exists(KEY_LEVELS))		readLevelList(data[KEY_LEVELS], to);
-		if (data.exists(KEY_BOARDS))		readBoardList(data[KEY_BOARDS], to);
+		if (options == null) {
+			if (data.exists(KEY_LEVELS))		readLevelList(data[KEY_LEVELS], to);
+			if (data.exists(KEY_BOARDS))		readBoardList(data[KEY_BOARDS], to);
+			if (data.exists(KEY_PLAYERS))		readPlayerList(data[KEY_PLAYERS], to);
+			if (data.exists(KEY_PROGRESS))		readProgressList(data[KEY_PROGRESS], to);
+		}
+		else {
+			if (options.levels && data.exists(KEY_LEVELS))			readLevelList(data[KEY_LEVELS], to);
+			if (options.boards && data.exists(KEY_BOARDS))			readBoardList(data[KEY_BOARDS], to);
+			if (options.players && data.exists(KEY_PLAYERS))		readPlayerList(data[KEY_PLAYERS], to);
+			if (options.progress && data.exists(KEY_PROGRESS))		readProgressList(data[KEY_PROGRESS], to);
+		}
 		
 		return to;
+	}
+	
+	/**
+	 * Записать игровые данные в строку формата JSON.
+	 * Записывает переданные игровые данные в строку формата JSON.
+	 * @param	data Игровые данные.
+	 * @param	options Опций разбора, если null - будут записаны все имеющиеся данные, иначе только отмеченные флагом true.
+	 * @return	Возвращает строку формата JSON.
+	 */
+	public function write(data:GameData, options:ParserOptions = null):String {
+		if (data == null)
+			throw new Error("Игровые данные для записи не должны быть null");
+		
+		var obj:DynamicAccess<Dynamic> = {};
+		
+		// Запись версии:
+		obj[KEY_VERSION] = Settings.VERSION.toString();
+		
+		// Запись списков:
+		if (options == null) {
+			obj[KEY_LEVELS]			= writeLevelList(data.levels);
+			obj[KEY_BOARDS]			= writeBoardList(data.boards);
+			obj[KEY_PLAYERS]		= writePlayerList(data.players);
+			obj[KEY_PROGRESS]		= writeProgressList(data.progress);
+		}
+		else {
+			if (options.levels)		obj[KEY_LEVELS] = writeLevelList(data.levels);
+			if (options.boards)		obj[KEY_BOARDS] = writeBoardList(data.boards);
+			if (options.players)	obj[KEY_PLAYERS] = writePlayerList(data.players);
+			if (options.progress)	obj[KEY_PROGRESS] = writeProgressList(data.progress);
+		}
+		
+		return Json.stringify(obj);
 	}
 	
 	// ЧТЕНИЕ
@@ -153,5 +213,105 @@ class ParserJSON extends AModel
 		if (state == 1)		return ChipState.WHITE;
 		
 		throw new Error("Некорректное значение состояния фишки на игровой доске. Допустимые значения: 0, 1. Получено: " + state);
+	}
+	// Игроки:
+	private function readPlayerList(arr:Array<Dynamic>, to:GameData):Void {
+		if (!Std.is(arr, Array))
+			throw new Error("Невалидное значение списка данных игроков (" + KEY_PLAYERS + "), ожидался массив, получено: " + Std.string(arr));
+		
+		var i = arr.length;
+		while (i-- > 0)
+			to.players.add(readPlayer(arr[i]));
+	}
+	private function readPlayer(data:DynamicAccess<Dynamic>):PlayerData {
+		if (data == null)
+			throw new Error("Данные игрока не должны быть null");
+			
+		var item		= new PlayerData();
+		item.id			= data["id"];
+		item.name		= data["name"];
+		item.score		= data["score"];
+		
+		return item;
+	}
+	// Прогресс:
+	private function readProgressList(arr:Array<Dynamic>, to:GameData):Void {
+		if (!Std.is(arr, Array))
+			throw new Error("Невалидное значение списка прогресса прохождения (" + KEY_PROGRESS + "), ожидался массив, получено: " + Std.string(arr));
+		
+		var i = arr.length;
+		while (i-- > 0)
+			to.players.add(readPlayer(arr[i]));
+	}
+	private function readProgress(data:DynamicAccess<Dynamic>):ProgressData {
+		if (data == null)
+			throw new Error("Данные прогресса прохождения не должны быть null");
+			
+		var item		= new ProgressData();
+		item.id			= data["id"];
+		item.level		= data["level"];
+		item.player		= data["player"];
+		item.completed	= readBool(data["completed"]);
+		
+		return item;
+	}
+	// Разное:
+	private function readBool(value:Dynamic):Bool {
+		if (value == 1)
+			return true;
+		else
+			return false;
+	}
+	
+	// ЗАПИСЬ
+	// Уровни:
+	private function writeLevelList(list:LevelDataList):Array<DynamicAccess<Dynamic>> {
+		throw new Error("Функционал не реализован");
+	}
+	// Доски:
+	private function writeBoardList(list:BoardDataList):Array<DynamicAccess<Dynamic>> {
+		throw new Error("Функционал не реализован");
+	}
+	// Игроки:
+	private function writePlayerList(list:PlayerDataList):Array<DynamicAccess<Dynamic>> {
+		var arr:Array<DynamicAccess<Dynamic>> = new Array();
+		
+		for (item in list)
+			arr.push(writePlayer(item));
+		
+		return arr;
+	}
+	private function writePlayer(item:PlayerData):DynamicAccess<Dynamic> {
+		var data:DynamicAccess<Dynamic> = {};
+		data["id"]			= item.id;
+		data["name"]		= item.name;
+		data["score"]		= item.score;
+		
+		return data;
+	}
+	// Прогресс:
+	private function writeProgressList(list:ProgressDataList):Array<DynamicAccess<Dynamic>> {
+		var arr:Array<DynamicAccess<Dynamic>> = new Array();
+		
+		for (item in list)
+			arr.push(writeProgress(item));
+		
+		return arr;
+	}
+	private function writeProgress(item:ProgressData):DynamicAccess<Dynamic> {
+		var data:DynamicAccess<Dynamic> = {};
+		data["id"]			= item.id;
+		data["level"]		= item.level;
+		data["player"]		= item.player;
+		data["completed"]	= writeBool(item.completed);
+		
+		return data;
+	}
+	// Разное:
+	private function writeBool(value:Bool):Int {
+		if (value)
+			return 1;
+		else
+			return 0;
 	}
 }

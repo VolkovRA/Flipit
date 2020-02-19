@@ -1,4 +1,4 @@
-package mvc.model.data.list;
+package mvc.model.data;
 
 /**
  * Элемент списка данных.

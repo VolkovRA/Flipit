@@ -1,13 +1,13 @@
-package mvc.model.data.level;
+package mvc.model.data.player;
 
 import mvc.model.Model;
 import mvc.model.data.DataList;
 
 /**
- * Список данных игровых уровней.
+ * Список данных игроков.
  * @author VolkovRA
  */
-class LevelDataList extends DataList<LevelData> 
+class PlayerDataList extends DataList<PlayerData> 
 {
 	/**
 	 * @inheritDoc

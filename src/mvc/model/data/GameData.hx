@@ -4,6 +4,8 @@ import mvc.model.AModel;
 import mvc.model.Model;
 import mvc.model.data.board.BoardDataList;
 import mvc.model.data.level.LevelDataList;
+import mvc.model.data.player.PlayerDataList;
+import mvc.model.data.progress.ProgressDataList;
 
 /**
  * Игровые данные.
@@ -24,14 +26,28 @@ class GameData extends AModel
 	public var boards(default, null):BoardDataList;
 	
 	/**
+	 * Данные игроков.
+	 * Не может быть null.
+	 */
+	public var players(default, null):PlayerDataList;
+	
+	/**
+	 * Данные прогресса игроков.
+	 * Не может быть null.
+	 */
+	public var progress(default, null):ProgressDataList;
+	
+	/**
 	 * Создать игровые данные.
 	 * @param	model Главная модель.
 	 */
 	public function new(model:Model) {
 		super(model);
 		
-		levels = new LevelDataList(model);
-		boards = new BoardDataList(model);
+		levels			= new LevelDataList(model);
+		boards			= new BoardDataList(model);
+		players			= new PlayerDataList(model);
+		progress		= new ProgressDataList(model);
 	}
 	
 	/**
@@ -49,5 +65,7 @@ class GameData extends AModel
 	public function clear():Void {
 		levels.clear();
 		boards.clear();
+		players.clear();
+		progress.clear();
 	}
 }
