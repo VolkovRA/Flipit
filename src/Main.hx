@@ -1,9 +1,9 @@
 package;
 
-import openfl.display.Sprite;
+import mvc.controller.Controller;
 import mvc.model.Model;
 import mvc.view.View;
-import mvc.controller.Controller;
+import openfl.display.Sprite;
 
 /**
  * Приложение.
@@ -47,6 +47,7 @@ class Main extends Sprite
 		trace("Version: " + Settings.VERSION);
 		
 		// Assets:
-		// openfl.Assets.getBitmapData("img/assetname.jpg");
+		// trace(Assets.exists("assets/config/levels.json"));
+		// trace(openfl.Assets.getText("assets/config/levels.json"));
 	}
 }

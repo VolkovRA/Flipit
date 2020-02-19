@@ -1,7 +1,7 @@
 package mvc.view;
 
-import openfl.errors.Error;
 import openfl.display.Sprite;
+import openfl.errors.Error;
 
 /**
  * Визуализатор.

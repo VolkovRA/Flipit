@@ -1,8 +1,8 @@
 package mvc.controller;
 
-import openfl.errors.Error;
 import mvc.model.Model;
 import mvc.view.View;
+import openfl.errors.Error;
 
 /**
  * Главный, игровой контроллер.
@@ -15,6 +15,7 @@ class Controller extends AController
 	 * Не может быть null после запуска игры.
 	 */
 	public var model(default, null):Model = null;
+	
 	/**
 	 * Главный, игровой визуализатор.
 	 * Не может быть null после запуска игры.
@@ -34,8 +35,10 @@ class Controller extends AController
 	 * @param	view Главный визуализатор.
 	 */
 	public function run(model:Model, view:View):Void {
-		if (model == null)		throw new Error("model - " + ErrorMessages.NULL);
-		if (view == null)		throw new Error("view - " + ErrorMessages.NULL);
+		if (model == null)
+			throw new Error("Ссылка на главную модель не должна быть null");
+		if (view == null)
+			throw new Error("Ссылка на главный визуализатор не должна быть null");
 		
 		this.model = model;
 		this.view = view;

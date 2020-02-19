@@ -2,7 +2,6 @@ package mvc.model.data.list;
 
 import mvc.model.AModel;
 import mvc.model.Model;
-import haxe.DynamicAccess;
 import openfl.errors.Error;
 
 /**

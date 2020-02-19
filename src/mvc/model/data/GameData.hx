@@ -2,8 +2,8 @@ package mvc.model.data;
 
 import mvc.model.AModel;
 import mvc.model.Model;
-import mvc.model.data.level.LevelDataList;
 import mvc.model.data.board.BoardDataList;
+import mvc.model.data.level.LevelDataList;
 
 /**
  * Игровые данные.

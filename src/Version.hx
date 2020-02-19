@@ -38,7 +38,7 @@ class Version
 	
 	/**
 	 * Распечатать версию.
-	 * Пример: "0.0.0"
+	 * Пример вывода: "0.0.0"
 	 */
 	@:keep
 	public function toString():String {

@@ -1,7 +1,7 @@
 package mvc.model.data.board;
 
-import mvc.model.data.list.DataList;
 import mvc.model.Model;
+import mvc.model.data.list.DataList;
 
 /**
  * Список данных игровых досок.
