@@ -17,8 +17,11 @@
 	<haxelib name="openfl" />
 	
 	<!-- assets -->
-	<icon path="assets/openfl.svg" />
-	<assets path="assets/img" rename="img" />
+	<!-- <icon path="assets/openfl.svg" /> -->
+	<assets path="assets/config"	type="text"		include="*"	/>
+	<assets path="assets/image"		type="image"	include="*" />
+	<assets path="assets/sound"		type="sound"	include="*" />
+	<assets path="assets/music"		type="music"	include="*" />
 	
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->
