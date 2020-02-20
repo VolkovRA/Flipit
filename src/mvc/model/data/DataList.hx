@@ -37,7 +37,7 @@ class DataList<T:DataListItem> extends AModel
 	 * Возвращает элемент с указанным ID или null, если такого нет в списке.
 	 * @param	id ID Искомого элемента.
 	 */
-	public function getItem(id:ID):T {
+	public function getItemByID(id:ID):T {
 		return map[id];
 	}
 	

@@ -5,7 +5,7 @@ import haxe.Json;
 import haxe.ds.Vector;
 import mvc.model.AModel;
 import mvc.model.Model;
-import mvc.model.board.ChipState;
+import mvc.model.chip.ChipState;
 import mvc.model.data.GameData;
 import mvc.model.data.board.BoardData;
 import mvc.model.data.board.BoardDataList;

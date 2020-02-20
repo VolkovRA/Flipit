@@ -2,6 +2,7 @@ package mvc.model.data.board;
 
 import mvc.model.Model;
 import mvc.model.data.DataList;
+import mvc.model.data.level.LevelData.LevelID;
 
 /**
  * Список данных игровых досок.
@@ -17,11 +18,11 @@ class BoardDataList extends DataList<BoardData>
 	}
 	
 	/**
-	 * Получить доску игрового уровня.
-	 * Возвращает первую найденную игровую доску для указанного номера уровня или null, если для запрошенного уровня доски нет.
-	 * @param	level Номер игрового уровня.
+	 * Получить игровую доску по её ID игрового уровня.
+	 * Возвращает первую найденную игровую доску для указанного id уровня или null, если такой доски нет.
+	 * @param	level ID Уровня.
 	 */
-	public function getBoardByLevel(level:Int):BoardData {
+	public function getBoardByLevel(level:LevelID):BoardData {
 		for (item in this) {
 			if (item.level == level)
 				return item;

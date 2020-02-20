@@ -1,4 +1,4 @@
-package mvc.model.board;
+package mvc.model.chip;
 
 /**
  * Возможные состояния фишек на игровой доске.

@@ -1,5 +1,6 @@
 package mvc.model;
 
+import mvc.model.game.Game;
 import mvc.model.parser.Parser;
 
 /**
@@ -12,7 +13,13 @@ class Model extends AModel
 	 * Парсер игровых данных.
 	 * Не может быть null.
 	 */
-	public var parser(default, null):Parser;
+	public var parser(default, null):Parser = null;
+	
+	/**
+	 * Экземпляр запущенной игры.
+	 * По умолчанию: null.
+	 */
+	public var game(default, null):Game = null;
 	
 	/**
 	 * Создать главную, игровую модель.
@@ -20,8 +27,7 @@ class Model extends AModel
 	public function new() {
 		super(this);
 		
-		parser = new Parser(this);
-		
-		//trace(parser.json.read(openfl.Assets.getText("assets/config/levels.json")));
+		parser	= new Parser(this);
+		game	= new Game(this);
 	}
 }

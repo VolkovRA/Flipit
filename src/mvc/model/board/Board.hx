@@ -4,7 +4,8 @@ import haxe.ds.Vector;
 import mvc.model.AModel;
 import mvc.model.Model;
 import mvc.model.board.BoardEvent;
-import mvc.model.board.ChipState;
+import mvc.model.chip.ChipState;
+import mvc.model.data.board.BoardData;
 import openfl.errors.Error;
 
 /**
@@ -15,23 +16,16 @@ import openfl.errors.Error;
 class Board extends AModel 
 {
 	/**
-	 * Размер игровой доски по ширине. (Количество фишек)
+	 * Размер игровой доски по ширине. (Количество фишек по горизонтали)
 	 * По умолчанию: 0.
 	 */
 	public var width(default, null):Int = 0;
 	
 	/**
-	 * Размер игровой доски по высоте. (Количество фишек)
+	 * Размер игровой доски по высоте. (Количество фишек по вертикали)
 	 * По умолчанию: 0.
 	 */
 	public var height(default, null):Int = 0;
-	
-	/**
-	 * Диспетчерезация событий.
-	 * Если false, объект не будет генерировать события при изменений своей структуры. (Например, для оптимизации загрузки)
-	 * По умолчанию: true. (Рассылать события)
-	 */
-	public var dispatch:Bool = true;
 	
 	// Приват:
 	private var _chips:Vector<Vector<ChipState>> = null;
@@ -42,39 +36,6 @@ class Board extends AModel
 	 */
 	public function new(model:Model) {
 		super(model);	
-	}
-	
-	/**
-	 * Установить размер игровой доски.
-	 * Вызов этого метода сбрасывает все текущие фишки, аналогично вызову метода: reset().
-	 * @param	width Новый размер игрового поля по ширине.
-	 * @param	height Новый размер игрового поля по высоте.
-	 * @param	state Состояние фишек.
-	 * @eventType mvc.model.board.BoardEvent.SIZE
-	 * @eventType mvc.model.board.BoardEvent.RESET
-	 */
-	public function setSize(width:Int, height:Int, state:ChipState = ChipState.BLACK):Void {
-		if (width <= 0)		throw new Error("Корректный размер игровой доски по ширине должен начинаться с 1, width=" + width);
-		if (height <= 0)	throw new Error("Корректный размер игровой доски по высоте должен начинаться с 1, height=" + height);
-		
-		_chips = new Vector<Vector<ChipState>>(width);
-		
-		for (i in 0..._chips.length) {
-			var vec = new Vector<ChipState>(height);
-			
-			_chips[i] = vec;
-			
-			for (j in 0...vec.length)
-				vec[j] = state;
-		}
-		
-		this.width = width;
-		this.height = height;
-		
-		if (dispatch) {
-			dispatchEvent(new BoardEvent(BoardEvent.SIZE));
-			dispatchEvent(new BoardEvent(BoardEvent.RESET));
-		}
 	}
 	
 	/**
@@ -97,12 +58,10 @@ class Board extends AModel
 		
 		_chips[x][y] = state;
 		
-		if (dispatch) {
-			var e = new BoardEvent(BoardEvent.CHIP_STATE);
-			e.x = x;
-			e.y = y;
-			dispatchEvent(e);
-		}
+		var e = new BoardEvent(BoardEvent.CHIP_STATE);
+		e.x = x;
+		e.y = y;
+		dispatchEvent(e);
 		
 		return true;
 	}
@@ -124,21 +83,68 @@ class Board extends AModel
 	}
 	
 	/**
-	 * Сбросить игровое поле.
-	 * Все фишки на игровом поле принимают указанное значение state.
-	 * @param	state Новое состояние фишек.
-	 * @eventType mvc.model.board.BoardEvent.RESET
+	 * Проверить доску на победу.
+	 * Возвращает true, если все фишки на доске собраны.
 	 */
-	public function reset(state:ChipState = ChipState.BLACK):Void {
+	public function checkWin():Bool {
 		if (width == 0)
-			return;
+			return false;
+		if (height == 0)
+			return false;
 		
-		for (i in 0..._chips.length) {
-			for (j in 0..._chips[i].length)
-				_chips[i][j] = state;
+		var x = _chips.length;
+		while (x-- > 0) {
+			var y = _chips[x].length;
+			while (y-- > 0) {
+				if (_chips[x][y] != Settings.CHIP_STATE_WIN)
+					return false;
+			}
 		}
 		
-		if (dispatch)
-			dispatchEvent(new BoardEvent(BoardEvent.RESET));
+		return true;
+	}
+	
+	/**
+	 * Установить доску.
+	 * Приводит доску в соответствие с переданными данными, изменяя её размер и состояние фишек.
+	 * @param	data Данные игровой доски.
+	 * @eventType mvc.model.board.BoardEvent.CHANGE
+	 */
+	public function setBoardData(board:BoardData):Void {
+		if (board == null)
+			throw new Error("Данные игровой доски не должны быть null");
+		if (board.data == null)
+			throw new Error("В переданном объекте данных игровой доски (id=" + board.id + ") нет описания игрового поля с фишками");
+		
+		width = board.data.length;
+		height = board.data[0].length;
+		
+		_chips = new Vector(width);
+		
+		var x = width;
+		while (x-- > 0) {
+			_chips[x] = new Vector(height);
+			
+			var y = height;
+			while (y-- > 0)
+				_chips[x][y] = board.data[x][y];
+		}
+		
+		dispatchEvent(new BoardEvent(BoardEvent.CHANGE));
+	}
+	
+	/**
+	 * Очистить доску.
+	 * Удаляет все фишки на игровой доске, размеры доски становятся: 0x0.
+	 * Приводит объект в изначальное состояние.
+	 * @eventType mvc.model.board.BoardEvent.CHANGE
+	 */
+	public function clear():Void {
+		width = 0;
+		height = 0;
+		
+		_chips = null;
+		
+		dispatchEvent(new BoardEvent(BoardEvent.CHANGE));
 	}
 }

@@ -8,19 +8,16 @@ import openfl.events.EventType;
  * @author VolkovRA
  */
 class BoardEvent extends Event 
-{
+{	
 	/**
-	 * Сброс игровых фишек.
+	 * Изменение всей доски.
+	 * Это событие диспетчерезируется при изменений размеров самой доски или при массовом изменении состояния сразу нескольких фишек.
 	 */
-	public static inline var RESET:EventType<Event>				= "boardReset";
+	public static inline var CHANGE:EventType<Event>			= "boardChange";
 	
 	/**
-	 * Установка новых размеров игрового поля.
-	 */
-	public static inline var SIZE:EventType<Event>				= "boardSize";
-	
-	/**
-	 * Изменение состояния фишки на игровом поле.
+	 * Изменение состояния игровой фишки.
+	 * Это событие используется при единичном изменении состояния у одной фишки.
 	 */
 	public static inline var CHIP_STATE:EventType<Event>		= "boardChipState";
 	

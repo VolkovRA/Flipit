@@ -1,7 +1,7 @@
 package mvc.model.data.board;
 
 import haxe.ds.Vector;
-import mvc.model.board.ChipState;
+import mvc.model.chip.ChipState;
 import mvc.model.data.level.LevelData.LevelID;
 
 /**
