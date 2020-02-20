@@ -43,6 +43,7 @@ class Controller extends AController
 		this.model = model;
 		this.view = view;
 		
-		// ...
+		// Показываем главное меню и передаём в него управление:
+		view.game.showScene(view.game.menuScene);
 	}
 }

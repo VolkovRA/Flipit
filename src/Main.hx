@@ -43,11 +43,5 @@ class Main extends Sprite
 		
 		// Запуск:
 		controller.run(model, view);
-		
-		trace("Version: " + Settings.VERSION);
-		
-		// Assets:
-		// trace(Assets.exists("assets/config/levels.json"));
-		// trace(openfl.Assets.getText("assets/config/levels.json"));
 	}
 }

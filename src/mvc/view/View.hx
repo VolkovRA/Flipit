@@ -2,6 +2,7 @@ package mvc.view;
 
 import mvc.controller.Controller;
 import mvc.model.Model;
+import mvc.view.game.GameView;
 import openfl.errors.Error;
 
 /**
@@ -14,13 +15,19 @@ class View extends AView
 	 * Главная, игровая модель.
 	 * Не может быть null.
 	 */
-	public var model(default, null):Model = null;
+	public var model(default, null):Model;
 	
 	/**
 	 * Главный, игровой контроллер.
 	 * Не может быть null.
 	 */
-	public var controller(default, null):Controller = null;
+	public var controller(default, null):Controller;
+	
+	/**
+	 * Визуализатор игры.
+	 * Не может быть null.
+	 */
+	public var game(default, null):GameView;
 	
 	/**
 	 * Создать главный, игровой визуализатор.
@@ -37,5 +44,9 @@ class View extends AView
 		
 		this.model = model;
 		this.controller = controller;
+		
+		// Отображение игры:
+		game = new GameView(this);
+		addChild(game);
 	}
 }

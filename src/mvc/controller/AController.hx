@@ -24,7 +24,7 @@ class AController extends EventDispatcher
 		super();
 		
 		if (controller == null)
-			throw new Error("Не передана ссылка на главный, игровой контроллер");
+			throw new Error("Главный контроллер не должен быть null");
 		
 		this.controller = controller;
 	}

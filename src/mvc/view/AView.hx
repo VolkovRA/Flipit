@@ -24,7 +24,7 @@ class AView extends Sprite
 		super();
 		
 		if (view == null)
-			throw new Error("Не передана ссылка на главный, игровой визуализатор");
+			throw new Error("Главный визуализатор не должен быть null");
 		
 		this.view = view;
 	}

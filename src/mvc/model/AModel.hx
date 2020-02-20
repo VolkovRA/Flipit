@@ -24,7 +24,7 @@ class AModel extends EventDispatcher
 		super();
 		
 		if (model == null)
-			throw new Error("Не передана ссылка на главную игровую модель");
+			throw new Error("Главная модель не должна быть null");
 		
 		this.model = model;
 	}
