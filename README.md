@@ -13,11 +13,11 @@
 Для запуска сервера игры на localhost, вы можете установить [NodeJS](https://nodejs.org/en/ "NodeJS"), а затем выполнить команду для установки web-сервера:
 `npm install http-server -g`
 
-Запуск сервера
+Запуск сервера:
 `cd D:\Folder`
 `http-server`
 
-Или
+Или:
 `http-server D:\Folder`
 
 Корень web-сервера должен быть запущен в папке с расположением файла: *index.html*.
