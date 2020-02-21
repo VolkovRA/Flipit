@@ -22,6 +22,7 @@
 	<assets path="assets/image"		type="image"	include="*" />
 	<assets path="assets/sound"		type="sound"	include="*" />
 	<assets path="assets/music"		type="music"	include="*" />
+	<assets path="assets/font"		type="font"		include="*" />
 	
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->
