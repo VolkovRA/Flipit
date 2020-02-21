@@ -112,17 +112,7 @@ class Button extends Sprite
 		if (skin == value)
 			return value;
 		
-		if (skin != null) {
-			if (skin.parent == this)
-				removeChild(skin);
-			
-			skin = null;
-		}
-		
-		if (value != null) {
-			skin = value;
-		}
-		
+		skin = value;
 		updateState();
 		
 		return value;
@@ -131,17 +121,7 @@ class Button extends Sprite
 		if (skinHover == value)
 			return value;
 		
-		if (skinHover != null) {
-			if (skinHover.parent == this)
-				removeChild(skinHover);
-			
-			skinHover = null;
-		}
-		
-		if (value != null) {
-			skinHover = value;
-		}
-		
+		skinHover = value;
 		updateState();
 		
 		return value;
@@ -150,17 +130,7 @@ class Button extends Sprite
 		if (skinPress == value)
 			return value;
 		
-		if (skinPress != null) {
-			if (skinPress.parent == this)
-				removeChild(skinPress);
-			
-			skinPress = null;
-		}
-		
-		if (value != null) {
-			skinPress = value;
-		}
-		
+		skinPress = value;
 		updateState();
 		
 		return value;
