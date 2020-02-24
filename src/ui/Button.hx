@@ -53,27 +53,27 @@ class Button extends Sprite
 		buttonMode				= true;
 		
 		// События:
-		addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-		addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-		addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-		addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-		addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		addEventListener(Event.REMOVED_FROM_STAGE, onButtonRemovedFromStage);
+		addEventListener(MouseEvent.MOUSE_OVER, onButtonMouseOver);
+		addEventListener(MouseEvent.MOUSE_OUT, onButtonMouseOut);
+		addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
+		addEventListener(MouseEvent.MOUSE_UP, onButtonMouseUp);
 	}
 	
 	// ЛИСТЕНЕРЫ
-	private function onRemovedFromStage(e:Event):Void {
+	private function onButtonRemovedFromStage(e:Event):Void {
 		state = ButtonState.NORMAL;
 	}
-	private function onMouseOver(e:MouseEvent):Void {
+	private function onButtonMouseOver(e:MouseEvent):Void {
 		state = ButtonState.HOVER;
 	}
-	private function onMouseOut(e:MouseEvent):Void {
+	private function onButtonMouseOut(e:MouseEvent):Void {
 		state = ButtonState.NORMAL;
 	}
-	private function onMouseDown(e:MouseEvent):Void {
+	private function onButtonMouseDown(e:MouseEvent):Void {
 		state = ButtonState.PRESS;
 	}
-	private function onMouseUp(e:MouseEvent):Void {
+	private function onButtonMouseUp(e:MouseEvent):Void {
 		state = ButtonState.HOVER;
 	}
 	
