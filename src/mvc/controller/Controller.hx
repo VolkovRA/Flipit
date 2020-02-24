@@ -2,6 +2,7 @@ package mvc.controller;
 
 import mvc.model.Model;
 import mvc.view.View;
+import openfl.Assets;
 import openfl.errors.Error;
 
 /**
@@ -42,6 +43,10 @@ class Controller extends AController
 		
 		this.model = model;
 		this.view = view;
+		
+		// Загружаем данные игры:
+		var data = controller.model.parser.json.read(Assets.getText("assets/config/levels.json"));
+		controller.model.game.load(data);
 		
 		// Показываем главное меню и передаём в него управление:
 		view.game.showScene(view.game.menuScene);

@@ -19,14 +19,22 @@ class Button extends Sprite
 	public var skin(default, set):DisplayObject = null;
 	/**
 	 * Скин наведения на кнопку.
+	 * Если не указан, используется: skin.
 	 * По умолчанию: null.
 	 */
 	public var skinHover(default, set):DisplayObject = null;
 	/**
 	 * Скин нажажатия на кнопку.
+	 * Если не указан, используется: skin.
 	 * По умолчанию: null.
 	 */
 	public var skinPress(default, set):DisplayObject = null;
+	/**
+	 * Скин выключенного состояния.
+	 * Если не указан, используется: skin.
+	 * По умолчанию: null.
+	 */
+	public var skinDisabled(default, set):DisplayObject = null;
 	/**
 	 * Состояние кнопки.
 	 * При изменений состояния диспетчерезируется событие: Event.CHANGE.
@@ -39,6 +47,12 @@ class Button extends Sprite
 	 * Не может быть null.
 	 */
 	public var skinWrap(default, null):Sprite;
+	/**
+	 * Кнопка включена.
+	 * Это свойство влияет только на отображение шкурки: skinDisabled.
+	 * По умолчанию: true.
+	 */
+	public var enabled(default, set):Bool = true;
 	
 	/**
 	 * Создать кнопку.
@@ -81,7 +95,20 @@ class Button extends Sprite
 	private function updateState():Void {
 		skinWrap.removeChildren();
 		
+		if (enabled == false) {
+			useHandCursor = false;
+			
+			if (skinDisabled != null)
+				skinWrap.addChild(skinDisabled);
+			else if (skin != null)
+				skinWrap.addChild(skin);
+			
+			return;
+		}
+		
 		if (state == ButtonState.NORMAL ) {
+			useHandCursor = true;
+			
 			if (skin != null)
 				skinWrap.addChild(skin);
 			
@@ -89,6 +116,8 @@ class Button extends Sprite
 		}
 		
 		if (state == ButtonState.HOVER) {
+			useHandCursor = true;
+			
 			if (skinHover != null)
 				skinWrap.addChild(skinHover);
 			else if (skin != null)
@@ -98,8 +127,21 @@ class Button extends Sprite
 		}
 		
 		if (state == ButtonState.PRESS) {
+			useHandCursor = true;
+			
 			if (skinPress != null)
 				skinWrap.addChild(skinPress);
+			else if (skin != null)
+				skinWrap.addChild(skin);
+			
+			return;
+		}
+		
+		if (state == ButtonState.DISABLED) {
+			useHandCursor = false;
+			
+			if (skinDisabled != null)
+				skinWrap.addChild(skinDisabled);
 			else if (skin != null)
 				skinWrap.addChild(skin);
 			
@@ -135,6 +177,15 @@ class Button extends Sprite
 		
 		return value;
 	}
+	function set_skinDisabled(value:DisplayObject):DisplayObject {
+		if (skinDisabled == value)
+			return value;
+		
+		skinDisabled = value;
+		updateState();
+		
+		return value;
+	}
 	function set_state(value:ButtonState):ButtonState {
 		if (state == value)
 			return value;
@@ -142,6 +193,15 @@ class Button extends Sprite
 		state = value;
 		updateState();
 		dispatchEvent(new Event(Event.CHANGE));
+		
+		return value;
+	}
+	function set_enabled(value:Bool):Bool {
+		if (value == enabled)
+			return value;
+		
+		enabled = value;
+		updateState();
 		
 		return value;
 	}
@@ -169,4 +229,9 @@ abstract ButtonState(String)
 	 * Нажатие на кнопку.
 	 */
 	var PRESS = "press";
+	
+	/**
+	 * Выключена.
+	 */
+	var DISABLED = "disabled";
 }

@@ -108,7 +108,7 @@ class MenuScene extends Scene
 	// ЛИСТЕНЕРЫ
 	// Кнопки:
 	private function onBtPlay(e:MouseEvent):Void {
-		trace("Play");
+		view.game.showChooseLevel();
 	}
 	private function onBtHowOver(e:MouseEvent):Void {
 		mOver.play();

@@ -48,4 +48,42 @@ class GameView extends SceneManager
 		levelsScene		= new LevelsScene(view);
 		playScene		= new PlayScene(view);
 	}
+	
+	// СЦЕНЫ
+	/**
+	 * Перейти на главный экран.
+	 */
+	public function showMainMenu():Void {
+		if (scene == menuScene)
+			return;
+		
+		showScene(menuScene);
+	}
+	/**
+	 * Перейти на выбор уровня.
+	 */
+	public function showChooseLevel():Void {
+		if (scene == levelsScene)
+			return;
+		
+		showScene(levelsScene);
+	}
+	/**
+	 * Перейти на экран игры.
+	 */
+	public function showGame():Void {
+		if (scene == playScene)
+			return;
+		
+		showScene(playScene);
+	}
+	/**
+	 * Перейти на завершающий экран.
+	 */
+	public function showGameOver():Void {
+		if (scene == endScene)
+			return;
+		
+		showScene(endScene);
+	}
 }

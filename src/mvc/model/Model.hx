@@ -17,7 +17,7 @@ class Model extends AModel
 	
 	/**
 	 * Экземпляр запущенной игры.
-	 * По умолчанию: null.
+	 * Не может быть null.
 	 */
 	public var game(default, null):Game = null;
 	

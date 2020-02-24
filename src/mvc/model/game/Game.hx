@@ -29,7 +29,7 @@ class Game extends AModel
 	 * Для загрузки данных используйте метод load().
 	 * По умолчанию: null.
 	 */
-	public var gameData(get, never):GameData;
+	public var data(get, never):GameData;
 	/**
 	 * Состояние игры. (read-only)
 	 * Значение описывает текущее состояние объекта Game.
@@ -78,7 +78,7 @@ class Game extends AModel
 	private var _bonus:Float			= 0;
 	private var _score:Float			= 0;
 	private var _scoreMax:Float			= 0;
-	private var _gameData:GameData		= null;
+	private var _data:GameData			= null;
 	
 	/**
 	 * Создать новую игру.
@@ -95,15 +95,15 @@ class Game extends AModel
 	 * Загрузить данные игры.
 	 * После успешной загрузки объект Game переходит в состояние: GameState.READY.
 	 * Игра должна находиться в состоянии: GameState.UNLOADED, в противном случае, будет выброшено исключение. Если это не так, сперва выгрузите текущую игру.
-	 * @param	gameData Игровые данные.
+	 * @param	data Игровые данные.
 	 */
-	public function load(gameData:GameData):Void {
-		if (gameData == null)
+	public function load(data:GameData):Void {
+		if (data == null)
 			throw new Error("Игровые данные не должны быть null");
 		if (_state != GameState.UNLOADED)
 			throw new Error("Предыдущая игра не выгружена");
 		
-		_gameData		= gameData;
+		_data			= data;
 		_state			= GameState.READY;
 		
 		dispatchEvent(new GameEvent(GameEvent.STATE));
@@ -117,7 +117,7 @@ class Game extends AModel
 		if (_state == GameState.UNLOADED)
 			return;
 		
-		_gameData		= null;
+		_data			= null;
 		_state			= GameState.UNLOADED;
 		_level			= 0;
 		
@@ -140,11 +140,11 @@ class Game extends AModel
 		if (_state == GameState.UNLOADED)
 			throw new Error("Данные игры не загружены");
 		
-		var levelData	= _gameData.levels.getItemByID(level);
+		var levelData	= _data.levels.getItemByID(level);
 		if (levelData == null)
 			throw new Error("Отсутствуют данные игрового уровня для level=" + level);
 		
-		var boardData	= _gameData.boards.getBoardByLevel(level);
+		var boardData	= _data.boards.getBoardByLevel(level);
 		if (boardData == null)
 			throw new Error("Отсутствуют данные игровой доски для уровня level=" + level);
 		
@@ -182,8 +182,8 @@ class Game extends AModel
 	function get_level():LevelID {
 		return _level;
 	}
-	function get_gameData():GameData {
-		return _gameData;
+	function get_data():GameData {
+		return _data;
 	}
 	
 	// СЕТТЕРЫ
