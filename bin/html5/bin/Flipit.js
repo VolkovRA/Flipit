@@ -894,9 +894,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","17");
+		_this.setReserved("build","21");
 	} else {
-		_this.h["build"] = "17";
+		_this.h["build"] = "21";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -4434,8 +4434,9 @@ ManifestResources.init = function(config) {
 		ManifestResources.rootPath = "./";
 	}
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$assets_$font_$cgbernhardtbd_$ttf);
+	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$assets_$font_$pixelyn_$ttf);
 	var bundle;
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy29:assets%2Fconfig%2Flevels.jsony4:sizei611y4:typey4:TEXTy2:idR1y7:preloadtgoR0y23:assets%2Fimage%2Fbg.pngR2i711975R3y5:IMAGER5R7R6tgoR0y24:assets%2Fimage%2Fbtn.pngR2i3719R3R8R5R9R6tgoR0y30:assets%2Fimage%2Fbtn_games.pngR2i4688R3R8R5R10R6tgoR0y36:assets%2Fimage%2Fbtn_games_hover.pngR2i4677R3R8R5R11R6tgoR0y30:assets%2Fimage%2Fbtn_hover.pngR2i4424R3R8R5R12R6tgoR0y28:assets%2Fimage%2Fbtn_lvl.pngR2i4472R3R8R5R13R6tgoR0y35:assets%2Fimage%2Fbtn_lvl_closed.pngR2i4226R3R8R5R14R6tgoR0y34:assets%2Fimage%2Fbtn_lvl_hover.pngR2i4669R3R8R5R15R6tgoR0y25:assets%2Fimage%2Fhead.pngR2i7579R3R8R5R16R6tgoR0y25:assets%2Fimage%2Fhelp.pngR2i132788R3R8R5R17R6tgoR0y32:assets%2Fimage%2Fhow_to_play.pngR2i4434R3R8R5R18R6tgoR0y25:assets%2Fimage%2Flogo.pngR2i6216R3R8R5R19R6tgoR0y26:assets%2Fimage%2Fpanel.pngR2i1179R3R8R5R20R6tgoR0y28:assets%2Fimage%2Fpreview.pngR2i728549R3R8R5R21R6tgoR0y29:assets%2Fimage%2Ftile%2F1.pngR2i4801R3R8R5R22R6tgoR0y30:assets%2Fimage%2Ftile%2F10.pngR2i3305R3R8R5R23R6tgoR0y30:assets%2Fimage%2Ftile%2F11.pngR2i4386R3R8R5R24R6tgoR0y30:assets%2Fimage%2Ftile%2F12.pngR2i3726R3R8R5R25R6tgoR0y30:assets%2Fimage%2Ftile%2F13.pngR2i3115R3R8R5R26R6tgoR0y30:assets%2Fimage%2Ftile%2F14.pngR2i3537R3R8R5R27R6tgoR0y30:assets%2Fimage%2Ftile%2F15.pngR2i3676R3R8R5R28R6tgoR0y30:assets%2Fimage%2Ftile%2F16.pngR2i4552R3R8R5R29R6tgoR0y30:assets%2Fimage%2Ftile%2F17.pngR2i4998R3R8R5R30R6tgoR0y30:assets%2Fimage%2Ftile%2F18.pngR2i4480R3R8R5R31R6tgoR0y30:assets%2Fimage%2Ftile%2F19.pngR2i4220R3R8R5R32R6tgoR0y29:assets%2Fimage%2Ftile%2F2.pngR2i3624R3R8R5R33R6tgoR0y30:assets%2Fimage%2Ftile%2F20.pngR2i3813R3R8R5R34R6tgoR0y30:assets%2Fimage%2Ftile%2F21.pngR2i4761R3R8R5R35R6tgoR0y29:assets%2Fimage%2Ftile%2F3.pngR2i3975R3R8R5R36R6tgoR0y29:assets%2Fimage%2Ftile%2F4.pngR2i4614R3R8R5R37R6tgoR0y29:assets%2Fimage%2Ftile%2F5.pngR2i4604R3R8R5R38R6tgoR0y29:assets%2Fimage%2Ftile%2F6.pngR2i4564R3R8R5R39R6tgoR0y29:assets%2Fimage%2Ftile%2F7.pngR2i3728R3R8R5R40R6tgoR0y29:assets%2Fimage%2Ftile%2F8.pngR2i3510R3R8R5R41R6tgoR0y29:assets%2Fimage%2Ftile%2F9.pngR2i3286R3R8R5R42R6tgoR2i11544R3y5:SOUNDR5y24:assets%2Fsound%2F193.mp3y9:pathGroupaR44hR6tgoR2i2652R3R43R5y30:assets%2Fsound%2Fbonus_out.mp3R45aR46hR6tgoR2i5070R3R43R5y30:assets%2Fsound%2Fgame_over.mp3R45aR47hR6tgoR2i11076R3R43R5y26:assets%2Fsound%2Fintro.mp3R45aR48hR6tgoR2i6084R3R43R5y35:assets%2Fsound%2Flevel_complete.mp3R45aR49hR6tgoR2i3276R3R43R5y31:assets%2Fsound%2Fmouse_down.mp3R45aR50hR6tgoR2i2496R3R43R5y31:assets%2Fsound%2Fmouse_over.mp3R45aR51hR6tgoR2i2340R3R43R5y27:assets%2Fsound%2Ftile_1.mp3R45aR52hR6tgoR2i2496R3R43R5y27:assets%2Fsound%2Ftile_2.mp3R45aR53hR6tgoR2i2184R3R43R5y27:assets%2Fsound%2Ftile_3.mp3R45aR54hR6tgoR2i27468R3y4:FONTy9:classNamey38:__ASSET__assets_font_cgbernhardtbd_ttfR5y33:assets%2Ffont%2FCgBernhardtBd.ttfR6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy29:assets%2Fconfig%2Flevels.jsony4:sizei611y4:typey4:TEXTy2:idR1y7:preloadtgoR0y23:assets%2Fimage%2Fbg.pngR2i711975R3y5:IMAGER5R7R6tgoR0y24:assets%2Fimage%2Fbtn.pngR2i3719R3R8R5R9R6tgoR0y30:assets%2Fimage%2Fbtn_games.pngR2i4688R3R8R5R10R6tgoR0y36:assets%2Fimage%2Fbtn_games_hover.pngR2i4677R3R8R5R11R6tgoR0y30:assets%2Fimage%2Fbtn_hover.pngR2i4424R3R8R5R12R6tgoR0y28:assets%2Fimage%2Fbtn_lvl.pngR2i4472R3R8R5R13R6tgoR0y35:assets%2Fimage%2Fbtn_lvl_closed.pngR2i4226R3R8R5R14R6tgoR0y34:assets%2Fimage%2Fbtn_lvl_hover.pngR2i4669R3R8R5R15R6tgoR0y25:assets%2Fimage%2Fhead.pngR2i7579R3R8R5R16R6tgoR0y25:assets%2Fimage%2Fhelp.pngR2i132788R3R8R5R17R6tgoR0y32:assets%2Fimage%2Fhow_to_play.pngR2i4434R3R8R5R18R6tgoR0y25:assets%2Fimage%2Flogo.pngR2i6216R3R8R5R19R6tgoR0y26:assets%2Fimage%2Fpanel.pngR2i2453R3R8R5R20R6tgoR0y28:assets%2Fimage%2Fpreview.pngR2i728549R3R8R5R21R6tgoR0y29:assets%2Fimage%2Ftile%2F1.pngR2i4801R3R8R5R22R6tgoR0y30:assets%2Fimage%2Ftile%2F10.pngR2i3305R3R8R5R23R6tgoR0y30:assets%2Fimage%2Ftile%2F11.pngR2i4386R3R8R5R24R6tgoR0y30:assets%2Fimage%2Ftile%2F12.pngR2i3726R3R8R5R25R6tgoR0y30:assets%2Fimage%2Ftile%2F13.pngR2i3115R3R8R5R26R6tgoR0y30:assets%2Fimage%2Ftile%2F14.pngR2i3537R3R8R5R27R6tgoR0y30:assets%2Fimage%2Ftile%2F15.pngR2i3676R3R8R5R28R6tgoR0y30:assets%2Fimage%2Ftile%2F16.pngR2i4552R3R8R5R29R6tgoR0y30:assets%2Fimage%2Ftile%2F17.pngR2i4998R3R8R5R30R6tgoR0y30:assets%2Fimage%2Ftile%2F18.pngR2i4480R3R8R5R31R6tgoR0y30:assets%2Fimage%2Ftile%2F19.pngR2i4220R3R8R5R32R6tgoR0y29:assets%2Fimage%2Ftile%2F2.pngR2i3624R3R8R5R33R6tgoR0y30:assets%2Fimage%2Ftile%2F20.pngR2i3813R3R8R5R34R6tgoR0y30:assets%2Fimage%2Ftile%2F21.pngR2i4761R3R8R5R35R6tgoR0y29:assets%2Fimage%2Ftile%2F3.pngR2i3975R3R8R5R36R6tgoR0y29:assets%2Fimage%2Ftile%2F4.pngR2i4614R3R8R5R37R6tgoR0y29:assets%2Fimage%2Ftile%2F5.pngR2i4604R3R8R5R38R6tgoR0y29:assets%2Fimage%2Ftile%2F6.pngR2i4564R3R8R5R39R6tgoR0y29:assets%2Fimage%2Ftile%2F7.pngR2i3728R3R8R5R40R6tgoR0y29:assets%2Fimage%2Ftile%2F8.pngR2i3510R3R8R5R41R6tgoR0y29:assets%2Fimage%2Ftile%2F9.pngR2i3286R3R8R5R42R6tgoR2i11544R3y5:SOUNDR5y24:assets%2Fsound%2F193.mp3y9:pathGroupaR44hR6tgoR2i2652R3R43R5y30:assets%2Fsound%2Fbonus_out.mp3R45aR46hR6tgoR2i5070R3R43R5y30:assets%2Fsound%2Fgame_over.mp3R45aR47hR6tgoR2i11076R3R43R5y26:assets%2Fsound%2Fintro.mp3R45aR48hR6tgoR2i6084R3R43R5y35:assets%2Fsound%2Flevel_complete.mp3R45aR49hR6tgoR2i3276R3R43R5y31:assets%2Fsound%2Fmouse_down.mp3R45aR50hR6tgoR2i2496R3R43R5y31:assets%2Fsound%2Fmouse_over.mp3R45aR51hR6tgoR2i2340R3R43R5y27:assets%2Fsound%2Ftile_1.mp3R45aR52hR6tgoR2i2496R3R43R5y27:assets%2Fsound%2Ftile_2.mp3R45aR53hR6tgoR2i2184R3R43R5y27:assets%2Fsound%2Ftile_3.mp3R45aR54hR6tgoR2i27468R3y4:FONTy9:classNamey38:__ASSET__assets_font_cgbernhardtbd_ttfR5y33:assets%2Ffont%2FCgBernhardtBd.ttfR6tgoR2i21836R3R55R56y32:__ASSET__assets_font_pixelyn_ttfR5y27:assets%2Ffont%2FPixelyn.ttfR6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -4663,6 +4664,23 @@ _$_$ASSET_$_$assets_$font_$cgbernhardtbd_$ttf.__super__ = lime_text_Font;
 _$_$ASSET_$_$assets_$font_$cgbernhardtbd_$ttf.prototype = $extend(lime_text_Font.prototype,{
 	__class__: _$_$ASSET_$_$assets_$font_$cgbernhardtbd_$ttf
 });
+var _$_$ASSET_$_$assets_$font_$pixelyn_$ttf = $hx_exports["__ASSET__assets_font_pixelyn_ttf"] = function() {
+	this.ascender = 500;
+	this.descender = -200;
+	this.height = 752;
+	this.numGlyphs = 98;
+	this.underlinePosition = -125;
+	this.underlineThickness = 50;
+	this.unitsPerEM = 1000;
+	this.name = "Pixelyn";
+	lime_text_Font.call(this);
+};
+$hxClasses["__ASSET__assets_font_pixelyn_ttf"] = _$_$ASSET_$_$assets_$font_$pixelyn_$ttf;
+_$_$ASSET_$_$assets_$font_$pixelyn_$ttf.__name__ = "__ASSET__assets_font_pixelyn_ttf";
+_$_$ASSET_$_$assets_$font_$pixelyn_$ttf.__super__ = lime_text_Font;
+_$_$ASSET_$_$assets_$font_$pixelyn_$ttf.prototype = $extend(lime_text_Font.prototype,{
+	__class__: _$_$ASSET_$_$assets_$font_$pixelyn_$ttf
+});
 var openfl_text_Font = function(name) {
 	lime_text_Font.call(this,name);
 };
@@ -4752,6 +4770,16 @@ _$_$ASSET_$_$OPENFL_$_$assets_$font_$cgbernhardtbd_$ttf.__name__ = "__ASSET__OPE
 _$_$ASSET_$_$OPENFL_$_$assets_$font_$cgbernhardtbd_$ttf.__super__ = openfl_text_Font;
 _$_$ASSET_$_$OPENFL_$_$assets_$font_$cgbernhardtbd_$ttf.prototype = $extend(openfl_text_Font.prototype,{
 	__class__: _$_$ASSET_$_$OPENFL_$_$assets_$font_$cgbernhardtbd_$ttf
+});
+var _$_$ASSET_$_$OPENFL_$_$assets_$font_$pixelyn_$ttf = $hx_exports["__ASSET__OPENFL__assets_font_pixelyn_ttf"] = function() {
+	this.__fromLimeFont(new _$_$ASSET_$_$assets_$font_$pixelyn_$ttf());
+	openfl_text_Font.call(this);
+};
+$hxClasses["__ASSET__OPENFL__assets_font_pixelyn_ttf"] = _$_$ASSET_$_$OPENFL_$_$assets_$font_$pixelyn_$ttf;
+_$_$ASSET_$_$OPENFL_$_$assets_$font_$pixelyn_$ttf.__name__ = "__ASSET__OPENFL__assets_font_pixelyn_ttf";
+_$_$ASSET_$_$OPENFL_$_$assets_$font_$pixelyn_$ttf.__super__ = openfl_text_Font;
+_$_$ASSET_$_$OPENFL_$_$assets_$font_$pixelyn_$ttf.prototype = $extend(openfl_text_Font.prototype,{
+	__class__: _$_$ASSET_$_$OPENFL_$_$assets_$font_$pixelyn_$ttf
 });
 Math.__name__ = "Math";
 var Reflect = function() { };
@@ -23888,7 +23916,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 543836;
+	this.version = 806249;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -28367,6 +28395,27 @@ motion_actuators_TransformActuator.prototype = $extend(motion_actuators_SimpleAc
 	}
 	,__class__: motion_actuators_TransformActuator
 });
+var motion_easing_Linear = function() { };
+$hxClasses["motion.easing.Linear"] = motion_easing_Linear;
+motion_easing_Linear.__name__ = "motion.easing.Linear";
+motion_easing_Linear.__properties__ = {get_easeNone:"get_easeNone"};
+motion_easing_Linear.get_easeNone = function() {
+	return new motion_easing_LinearEaseNone();
+};
+var motion_easing_LinearEaseNone = function() {
+};
+$hxClasses["motion.easing.LinearEaseNone"] = motion_easing_LinearEaseNone;
+motion_easing_LinearEaseNone.__name__ = "motion.easing.LinearEaseNone";
+motion_easing_LinearEaseNone.__interfaces__ = [motion_easing_IEasing];
+motion_easing_LinearEaseNone.prototype = {
+	calculate: function(k) {
+		return k;
+	}
+	,ease: function(t,b,c,d) {
+		return c * t / d + b;
+	}
+	,__class__: motion_easing_LinearEaseNone
+};
 var mvc_controller_AController = function(controller) {
 	this.controller = null;
 	openfl_events_EventDispatcher.call(this);
@@ -29377,20 +29426,35 @@ var mvc_view_scene_MenuScene = function(view) {
 	this.logo.set_y(16);
 	this.addChild(this.logo);
 	this.btMore = new ui_ButtonMoreGames();
-	this.btMore.set_x(276);
-	this.btMore.set_y(383);
+	this.btMore.set_x(272);
+	this.btMore.set_y(379);
 	this.btMore.addEventListener("click",$bind(this,this.onBtMore));
 	this.addChild(this.btMore);
-	this.btPlay = new ui_ButtonLabel();
-	this.btPlay.set_x(458);
+	this.btPlay = new ui_ButtonPlay();
+	this.btPlay.set_x(457);
 	this.btPlay.set_y(385);
 	this.btPlay.addEventListener("click",$bind(this,this.onBtPlay));
-	this.btPlay.addEventListener("mouseOver",$bind(this,this.onBtPlayOver));
 	this.addChild(this.btPlay);
 	this.btHow = new ui_ButtonHowPlay();
 	this.btHow.addEventListener("mouseOver",$bind(this,this.onBtHowOver));
 	this.btHow.addEventListener("mouseOut",$bind(this,this.onBtHowOut));
 	this.addChild(this.btHow);
+	this.score = new mvc_view_score_HighestScore(view);
+	this.score.set_x(22);
+	this.score.set_y(374);
+	this.addChild(this.score);
+	this.version = new openfl_text_TextField();
+	this.version.set_defaultTextFormat(new openfl_text_TextFormat(openfl_utils_Assets.getFont("assets/font/Pixelyn.ttf").name,10,16777215,false,false,false,null,null,4));
+	this.version.set_antiAliasType(0);
+	this.version.set_x(533);
+	this.version.set_y(7);
+	this.version.set_width(100);
+	this.version.set_height(30);
+	this.version.set_embedFonts(true);
+	this.version.set_selectable(false);
+	this.version.set_multiline(false);
+	this.version.set_text(Settings.VERSION.toString());
+	this.addChild(this.version);
 	this.faq = new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/image/help.png"));
 	this.faq.set_y(-330);
 	this.addChild(this.faq);
@@ -29403,14 +29467,13 @@ mvc_view_scene_MenuScene.prototype = $extend(mvc_view_scene_Scene.prototype,{
 	,btPlay: null
 	,btMore: null
 	,btHow: null
+	,score: null
 	,faq: null
 	,bg: null
+	,version: null
 	,mOver: null
 	,onBtPlay: function(e) {
-		haxe_Log.trace("Play",{ fileName : "src/mvc/view/scene/MenuScene.hx", lineNumber : 85, className : "mvc.view.scene.MenuScene", methodName : "onBtPlay"});
-	}
-	,onBtPlayOver: function(e) {
-		this.mOver.play();
+		haxe_Log.trace("Play",{ fileName : "src/mvc/view/scene/MenuScene.hx", lineNumber : 111, className : "mvc.view.scene.MenuScene", methodName : "onBtPlay"});
 	}
 	,onBtHowOver: function(e) {
 		this.mOver.play();
@@ -29442,6 +29505,110 @@ mvc_view_scene_PlayScene.prototype = $extend(mvc_view_scene_Scene.prototype,{
 		haxe_Log.trace("PlayScene onRemovedFromStage",{ fileName : "src/mvc/view/scene/PlayScene.hx", lineNumber : 29, className : "mvc.view.scene.PlayScene", methodName : "onRemovedFromStage"});
 	}
 	,__class__: mvc_view_scene_PlayScene
+});
+var mvc_view_score_HighestScore = function(view) {
+	mvc_view_AView.call(this,view);
+	this.mOver = openfl_utils_Assets.getSound("assets/sound/mouse_over.mp3");
+	this.bg = new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/image/panel.png"));
+	this.bg.set_x(-2);
+	this.bg.set_y(-1);
+	this.addChild(this.bg);
+	this.circle = new openfl_display_Sprite();
+	this.circle.get_graphics().lineStyle(2,16776960,1,false,1);
+	this.circle.get_graphics().drawCircle(0,0,46);
+	this.circle.set_x(91);
+	this.circle.set_y(46);
+	this.circle.set_visible(false);
+	this.addChild(this.circle);
+	this.label = new openfl_text_TextField();
+	this.label.set_defaultTextFormat(new openfl_text_TextFormat(openfl_utils_Assets.getFont("assets/font/CgBernhardtBd.ttf").name,13,16777215,false,false,false,null,null,0));
+	this.label.set_antiAliasType(0);
+	this.label.set_y(4);
+	this.label.set_width(190);
+	this.label.set_height(28);
+	this.label.set_embedFonts(true);
+	this.label.set_selectable(false);
+	this.label.set_multiline(false);
+	this.label.set_text("YOU HIGHEST SCORE");
+	this.addChild(this.label);
+	this.score = new openfl_text_TextField();
+	this.score.set_defaultTextFormat(new openfl_text_TextFormat(openfl_utils_Assets.getFont("assets/font/CgBernhardtBd.ttf").name,37,16777215,false,false,false,null,null,0));
+	this.score.set_antiAliasType(0);
+	this.score.set_y(18);
+	this.score.set_width(190);
+	this.score.set_height(50);
+	this.score.set_embedFonts(true);
+	this.score.set_selectable(false);
+	this.score.set_multiline(false);
+	this.score.set_filters([new openfl_filters_DropShadowFilter(4,45,0,0.7,3,3,1)]);
+	this.addChild(this.score);
+	var skin = new openfl_text_TextField();
+	skin.set_defaultTextFormat(new openfl_text_TextFormat(openfl_utils_Assets.getFont("assets/font/CgBernhardtBd.ttf").name,13,10066329,false,false,false,null,null,0));
+	skin.set_antiAliasType(0);
+	skin.set_autoSize(0);
+	skin.set_y(63);
+	skin.set_width(190);
+	skin.set_height(28);
+	skin.set_embedFonts(true);
+	skin.set_selectable(false);
+	skin.set_multiline(false);
+	skin.set_text("RESET SCORE");
+	skin.set_filters([new openfl_filters_DropShadowFilter(4,45,0,0.7,3,3,1)]);
+	var skinHover = new openfl_text_TextField();
+	skinHover.set_defaultTextFormat(new openfl_text_TextFormat(openfl_utils_Assets.getFont("assets/font/CgBernhardtBd.ttf").name,13,16776960,false,false,false,null,null,0));
+	skinHover.set_antiAliasType(0);
+	skinHover.set_autoSize(skin.get_autoSize());
+	skinHover.set_y(skin.get_y());
+	skinHover.set_x(skin.get_x());
+	skinHover.set_width(skin.get_width());
+	skinHover.set_height(skin.get_height());
+	skinHover.set_embedFonts(skin.get_embedFonts());
+	skinHover.set_selectable(skin.get_selectable());
+	skinHover.set_multiline(skin.get_multiline());
+	skinHover.set_text(skin.get_text());
+	skinHover.set_filters([new openfl_filters_DropShadowFilter(4,45,0,0.7,3,3,1)]);
+	this.reset = new ui_Button();
+	this.reset.set_skin(skin);
+	this.reset.set_skinHover(skinHover);
+	this.reset.set_skinPress(skinHover);
+	this.reset.addEventListener("mouseOver",$bind(this,this.onResetHover));
+	this.reset.addEventListener("click",$bind(this,this.onResetClick));
+	this.addChild(this.reset);
+	this.addEventListener("addedToStage",$bind(this,this.onAddedToStage));
+	this.addEventListener("removedFromStage",$bind(this,this.onRemovedFromStage));
+};
+$hxClasses["mvc.view.score.HighestScore"] = mvc_view_score_HighestScore;
+mvc_view_score_HighestScore.__name__ = "mvc.view.score.HighestScore";
+mvc_view_score_HighestScore.__super__ = mvc_view_AView;
+mvc_view_score_HighestScore.prototype = $extend(mvc_view_AView.prototype,{
+	bg: null
+	,label: null
+	,score: null
+	,reset: null
+	,circle: null
+	,mOver: null
+	,onAddedToStage: function(e) {
+		this.updateScore();
+	}
+	,onRemovedFromStage: function(e) {
+	}
+	,onResetHover: function(e) {
+		this.mOver.play();
+	}
+	,onResetClick: function(e) {
+		haxe_Log.trace("Reset!",{ fileName : "src/mvc/view/score/HighestScore.hx", lineNumber : 146, className : "mvc.view.score.HighestScore", methodName : "onResetClick"});
+		this.circle.set_visible(true);
+		this.circle.set_scaleX(1);
+		this.circle.set_scaleY(1);
+		motion_Actuate.stop(this.circle);
+		motion_Actuate.tween(this.circle,0.16,{ scaleX : 0, scaleY : 0}).onComplete(function(obj) {
+			obj.set_visible(false);
+		},[this.circle]).ease(motion_easing_Linear.get_easeNone());
+	}
+	,updateScore: function() {
+		this.score.set_text("0");
+	}
+	,__class__: mvc_view_score_HighestScore
 });
 var openfl_Lib = function() { };
 $hxClasses["openfl.Lib"] = openfl_Lib;
@@ -75965,11 +76132,11 @@ var ui_Button = function() {
 	this.skinWrap.mouseChildren = false;
 	this.addChild(this.skinWrap);
 	this.set_buttonMode(true);
-	this.addEventListener("removedFromStage",$bind(this,this.onRemovedFromStage));
-	this.addEventListener("mouseOver",$bind(this,this.onMouseOver));
-	this.addEventListener("mouseOut",$bind(this,this.onMouseOut));
-	this.addEventListener("mouseDown",$bind(this,this.onMouseDown));
-	this.addEventListener("mouseUp",$bind(this,this.onMouseUp));
+	this.addEventListener("removedFromStage",$bind(this,this.onButtonRemovedFromStage));
+	this.addEventListener("mouseOver",$bind(this,this.onButtonMouseOver));
+	this.addEventListener("mouseOut",$bind(this,this.onButtonMouseOut));
+	this.addEventListener("mouseDown",$bind(this,this.onButtonMouseDown));
+	this.addEventListener("mouseUp",$bind(this,this.onButtonMouseUp));
 };
 $hxClasses["ui.Button"] = ui_Button;
 ui_Button.__name__ = "ui.Button";
@@ -75980,19 +76147,19 @@ ui_Button.prototype = $extend(openfl_display_Sprite.prototype,{
 	,skinPress: null
 	,state: null
 	,skinWrap: null
-	,onRemovedFromStage: function(e) {
+	,onButtonRemovedFromStage: function(e) {
 		this.set_state("normal");
 	}
-	,onMouseOver: function(e) {
+	,onButtonMouseOver: function(e) {
 		this.set_state("hover");
 	}
-	,onMouseOut: function(e) {
+	,onButtonMouseOut: function(e) {
 		this.set_state("normal");
 	}
-	,onMouseDown: function(e) {
+	,onButtonMouseDown: function(e) {
 		this.set_state("press");
 	}
-	,onMouseUp: function(e) {
+	,onButtonMouseUp: function(e) {
 		this.set_state("hover");
 	}
 	,updateState: function() {
@@ -76024,15 +76191,7 @@ ui_Button.prototype = $extend(openfl_display_Sprite.prototype,{
 		if(this.skin == value) {
 			return value;
 		}
-		if(this.skin != null) {
-			if(this.skin.parent == this) {
-				this.removeChild(this.skin);
-			}
-			this.skin = null;
-		}
-		if(value != null) {
-			this.skin = value;
-		}
+		this.skin = value;
 		this.updateState();
 		return value;
 	}
@@ -76040,15 +76199,7 @@ ui_Button.prototype = $extend(openfl_display_Sprite.prototype,{
 		if(this.skinHover == value) {
 			return value;
 		}
-		if(this.skinHover != null) {
-			if(this.skinHover.parent == this) {
-				this.removeChild(this.skinHover);
-			}
-			this.skinHover = null;
-		}
-		if(value != null) {
-			this.skinHover = value;
-		}
+		this.skinHover = value;
 		this.updateState();
 		return value;
 	}
@@ -76056,15 +76207,7 @@ ui_Button.prototype = $extend(openfl_display_Sprite.prototype,{
 		if(this.skinPress == value) {
 			return value;
 		}
-		if(this.skinPress != null) {
-			if(this.skinPress.parent == this) {
-				this.removeChild(this.skinPress);
-			}
-			this.skinPress = null;
-		}
-		if(value != null) {
-			this.skinPress = value;
-		}
+		this.skinPress = value;
 		this.updateState();
 		return value;
 	}
@@ -76100,18 +76243,6 @@ ui_ButtonHowPlay.__super__ = ui_Button;
 ui_ButtonHowPlay.prototype = $extend(ui_Button.prototype,{
 	__class__: ui_ButtonHowPlay
 });
-var ui_ButtonLabel = function() {
-	ui_Button.call(this);
-	this.set_skin(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/image/btn.png")));
-	this.set_skinHover(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/image/btn_hover.png")));
-	this.set_skinPress(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/image/btn_hover.png")));
-};
-$hxClasses["ui.ButtonLabel"] = ui_ButtonLabel;
-ui_ButtonLabel.__name__ = "ui.ButtonLabel";
-ui_ButtonLabel.__super__ = ui_Button;
-ui_ButtonLabel.prototype = $extend(ui_Button.prototype,{
-	__class__: ui_ButtonLabel
-});
 var ui_ButtonMoreGames = function() {
 	ui_Button.call(this);
 	var sensor = new openfl_display_Sprite();
@@ -76131,6 +76262,58 @@ ui_ButtonMoreGames.__name__ = "ui.ButtonMoreGames";
 ui_ButtonMoreGames.__super__ = ui_Button;
 ui_ButtonMoreGames.prototype = $extend(ui_Button.prototype,{
 	__class__: ui_ButtonMoreGames
+});
+var ui_ButtonPlay = function() {
+	ui_Button.call(this);
+	this.sound = openfl_utils_Assets.getSound("assets/sound/mouse_over.mp3");
+	var wrap = new openfl_display_Sprite();
+	var bt = new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/image/btn.png"));
+	bt.set_scaleX(0.91);
+	bt.set_scaleY(0.9);
+	wrap.addChild(bt);
+	var label = new openfl_text_TextField();
+	label.set_defaultTextFormat(new openfl_text_TextFormat(openfl_utils_Assets.getFont("assets/font/CgBernhardtBd.ttf").name,37,16777215,false,false,false,null,null,0));
+	label.set_antiAliasType(0);
+	label.set_y(8);
+	label.set_width(146);
+	label.set_height(40);
+	label.set_embedFonts(true);
+	label.set_selectable(false);
+	label.set_multiline(false);
+	label.set_text("PLAY");
+	label.set_filters([new openfl_filters_DropShadowFilter(4,45,0,0.8,3,3,1)]);
+	wrap.addChild(label);
+	var wrap2 = new openfl_display_Sprite();
+	var bt2 = new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/image/btn_hover.png"));
+	bt2.set_scaleX(0.91);
+	bt2.set_scaleY(0.9);
+	wrap2.addChild(bt2);
+	var label2 = new openfl_text_TextField();
+	label2.set_defaultTextFormat(label.get_defaultTextFormat());
+	label2.set_antiAliasType(label.get_antiAliasType());
+	label2.set_y(label.get_y());
+	label2.set_width(label.get_width());
+	label2.set_height(label.get_height());
+	label2.set_embedFonts(label.get_embedFonts());
+	label2.set_selectable(label.get_selectable());
+	label2.set_multiline(label.get_multiline());
+	label2.set_text(label.get_text());
+	label2.set_filters([new openfl_filters_DropShadowFilter(4,45,0,0.8,3,3,1)]);
+	wrap2.addChild(label2);
+	this.set_skin(wrap);
+	this.set_skinHover(wrap2);
+	this.set_skinPress(this.skinHover);
+	this.addEventListener("mouseOver",$bind(this,this.onMouseOver));
+};
+$hxClasses["ui.ButtonPlay"] = ui_ButtonPlay;
+ui_ButtonPlay.__name__ = "ui.ButtonPlay";
+ui_ButtonPlay.__super__ = ui_Button;
+ui_ButtonPlay.prototype = $extend(ui_Button.prototype,{
+	sound: null
+	,onMouseOver: function(e) {
+		this.sound.play();
+	}
+	,__class__: ui_ButtonPlay
 });
 function $getIterator(o) { if( o instanceof Array ) return HxOverrides.iter(o); else return o.iterator(); }
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $global.$haxeUID++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = m.bind(o); o.hx__closures__[m.__id__] = f; } return f; }
