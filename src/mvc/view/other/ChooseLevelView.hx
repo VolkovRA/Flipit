@@ -1,4 +1,4 @@
-package mvc.view.level;
+package mvc.view.other;
 
 import mvc.model.data.GameData;
 import mvc.model.data.level.LevelData.LevelID;
@@ -7,15 +7,15 @@ import mvc.view.View;
 import openfl.events.Event;
 import openfl.events.EventType;
 import openfl.events.MouseEvent;
-import ui.ButtonLevel;
+import ui.LevelButton;
 
 /**
  * Панелька отображения игровых уровней.
  * @author VolkovRA
  */
-class LevelsPanel extends AView 
+class ChooseLevelView extends AView 
 {
-	private var arr:Array<ButtonLevel> = null;
+	private var arr:Array<LevelButton> = null;
 	
 	/**
 	 * Создать панельку.
@@ -33,10 +33,10 @@ class LevelsPanel extends AView
 		update();
 	}
 	private function onPressLevel(e:MouseEvent):Void {
-		if (Std.is(e.currentTarget, ButtonLevel) == false)
+		if (Std.is(e.currentTarget, LevelButton) == false)
 			return;
 		
-		var bt:ButtonLevel		= e.currentTarget;
+		var bt:LevelButton		= e.currentTarget;
 		var e:LevelsPanelEvent	= new LevelsPanelEvent(LevelsPanelEvent.CHOOSE);
 		e.level					= bt.level.id;
 		dispatchEvent(e);
@@ -58,7 +58,7 @@ class LevelsPanel extends AView
 		// Строим список:
 		arr = new Array();
 		for (level in data.levels) {
-			var bt			= new ButtonLevel();
+			var bt			= new LevelButton();
 			bt.level		= level;
 			arr.push(bt);
 		}
@@ -92,7 +92,7 @@ class LevelsPanel extends AView
 			i ++;
 		}
 	}
-	private function sortLevels(x:ButtonLevel, y:ButtonLevel):Int {
+	private function sortLevels(x:LevelButton, y:LevelButton):Int {
 		if (x.level.num > y.level.num)
 			return 1;
 		if (x.level.num < y.level.num)

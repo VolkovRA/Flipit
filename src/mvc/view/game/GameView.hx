@@ -1,10 +1,10 @@
 package mvc.view.game;
 
 import mvc.view.View;
-import mvc.view.scene.MenuScene;
-import mvc.view.scene.EndScene;
-import mvc.view.scene.LevelsScene;
-import mvc.view.scene.PlayScene;
+import mvc.view.scene.MainMenuScene;
+import mvc.view.scene.GameOverScene;
+import mvc.view.scene.ChooseLevelScene;
+import mvc.view.scene.GameScene;
 import mvc.view.scene.SceneManager;
 
 /**
@@ -17,22 +17,22 @@ class GameView extends SceneManager
 	 * Сцена с главным игровым меню.
 	 * Не может быть null.
 	 */
-	public var menuScene(default, null):MenuScene;
+	public var mainMenuScene(default, null):MainMenuScene;
 	/**
 	 * Сцена завершения игры.
 	 * Не может быть null.
 	 */
-	public var endScene(default, null):EndScene;
+	public var gameOverScene(default, null):GameOverScene;
 	/**
 	 * Сцена выбора игрового уровня.
 	 * Не может быть null.
 	 */
-	public var levelsScene(default, null):LevelsScene;
+	public var chooseLevelScene(default, null):ChooseLevelScene;
 	/**
 	 * Сцена с основным игровым процессом.
 	 * Не может быть null.
 	 */
-	public var playScene(default, null):PlayScene;
+	public var gameScene(default, null):GameScene;
 	
 	/**
 	 * Создать визуализатор запущенной игры.
@@ -43,10 +43,10 @@ class GameView extends SceneManager
 		
 		// Инициализация.
 		// Сцены:
-		menuScene		= new MenuScene(view);
-		endScene		= new EndScene(view);
-		levelsScene		= new LevelsScene(view);
-		playScene		= new PlayScene(view);
+		mainMenuScene		= new MainMenuScene(view);
+		gameOverScene		= new GameOverScene(view);
+		chooseLevelScene	= new ChooseLevelScene(view);
+		gameScene			= new GameScene(view);
 	}
 	
 	// СЦЕНЫ
@@ -54,36 +54,36 @@ class GameView extends SceneManager
 	 * Перейти на главный экран.
 	 */
 	public function showMainMenu():Void {
-		if (scene == menuScene)
+		if (scene == mainMenuScene)
 			return;
 		
-		showScene(menuScene);
+		showScene(mainMenuScene);
 	}
 	/**
 	 * Перейти на выбор уровня.
 	 */
 	public function showChooseLevel():Void {
-		if (scene == levelsScene)
+		if (scene == chooseLevelScene)
 			return;
 		
-		showScene(levelsScene);
+		showScene(chooseLevelScene);
 	}
 	/**
 	 * Перейти на экран игры.
 	 */
 	public function showGame():Void {
-		if (scene == playScene)
+		if (scene == gameScene)
 			return;
 		
-		showScene(playScene);
+		showScene(gameScene);
 	}
 	/**
 	 * Перейти на завершающий экран.
 	 */
 	public function showGameOver():Void {
-		if (scene == endScene)
+		if (scene == gameOverScene)
 			return;
 		
-		showScene(endScene);
+		showScene(gameOverScene);
 	}
 }

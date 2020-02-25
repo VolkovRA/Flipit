@@ -3,7 +3,7 @@ package mvc.view.scene;
 import js.Browser;
 import motion.Actuate;
 import mvc.view.View;
-import mvc.view.score.HighestScore;
+import mvc.view.other.HighestScoreView;
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.events.MouseEvent;
@@ -12,25 +12,25 @@ import openfl.text.TextField;
 import openfl.text.TextFormat;
 import openfl.text.TextFormatAlign;
 import openfl.text.AntiAliasType;
-import ui.ButtonHowPlay;
-import ui.ButtonPlay;
-import ui.ButtonMoreGames;
+import ui.HowToPlayButton;
+import ui.PlayButton;
+import ui.MoreGamesButton;
 
 /**
  * Сцена с главным игровым меню.
  * @author VolkovRA
  */
-class MenuScene extends Scene 
+class MainMenuScene extends Scene 
 {
 	static private inline var FAQ_Y:Float = -330;
 	
 	// Приват
 	// Содержимое:
 	private var logo:Bitmap;
-	private var btPlay:ButtonPlay;
-	private var btMore:ButtonMoreGames;
-	private var btHow:ButtonHowPlay;
-	private var score:HighestScore;
+	private var btPlay:PlayButton;
+	private var btMore:MoreGamesButton;
+	private var btHow:HowToPlayButton;
+	private var score:HighestScoreView;
 	private var faq:Bitmap;
 	private var bg:Bitmap;
 	private var version:TextField;
@@ -60,27 +60,27 @@ class MenuScene extends Scene
 		addChild(logo);
 		
 		// Кнопка: "Больше игр":
-		btMore				= new ButtonMoreGames();
+		btMore				= new MoreGamesButton();
 		btMore.x			= 272;
 		btMore.y			= 379;
 		btMore.addEventListener(MouseEvent.CLICK, onBtMore);
 		addChild(btMore);
 		
 		// Кнопка: "Играть":
-		btPlay				= new ButtonPlay();
+		btPlay				= new PlayButton();
 		btPlay.x			= 457;
 		btPlay.y			= 385;
 		btPlay.addEventListener(MouseEvent.CLICK, onBtPlay);
 		addChild(btPlay);
 		
 		// Кнопка: "Как играть?":
-		btHow				= new ButtonHowPlay();
+		btHow				= new HowToPlayButton();
 		btHow.addEventListener(MouseEvent.MOUSE_OVER, onBtHowOver);
 		btHow.addEventListener(MouseEvent.MOUSE_OUT, onBtHowOut);
 		addChild(btHow);
 		
 		// Панелька с очками:
-		score				= new HighestScore(view);
+		score				= new HighestScoreView(view);
 		score.x				= 22;
 		score.y				= 374;
 		addChild(score);

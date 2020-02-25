@@ -1,7 +1,7 @@
 package mvc.view.scene;
 
 import mvc.view.View;
-import mvc.view.level.LevelsPanel;
+import mvc.view.other.ChooseLevelView;
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.text.AntiAliasType;
@@ -13,13 +13,13 @@ import openfl.text.TextFormatAlign;
  * Сцена выбора игрового уровня.
  * @author VolkovRA
  */
-class LevelsScene extends Scene 
+class ChooseLevelScene extends Scene 
 {
 	// Приват
 	private var title:TextField;
 	private var descr:TextField;
 	private var footer:TextField;
-	private var levels:LevelsPanel;
+	private var levels:ChooseLevelView;
 	private var bg:Bitmap;
 	
 	/**
@@ -80,7 +80,7 @@ class LevelsScene extends Scene
 		addChild(footer);
 		
 		// Уровни:
-		levels				= new LevelsPanel(view);
+		levels				= new ChooseLevelView(view);
 		levels.x			= 154;
 		levels.y			= 154;
 		levels.addEventListener(LevelsPanelEvent.CHOOSE, onLevelChoose);

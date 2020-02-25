@@ -8,7 +8,7 @@ import openfl.display.Sprite;
  * Кнопка - больше игр.
  * @author VolkovRA
  */
-class ButtonMoreGames extends Button 
+class MoreGamesButton extends Button 
 {
 	/**
 	 * Создать кнопку.

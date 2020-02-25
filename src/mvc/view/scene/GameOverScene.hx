@@ -7,7 +7,7 @@ import openfl.events.Event;
  * Сцена завершения игры.
  * @author VolkovRA
  */
-class EndScene extends Scene 
+class GameOverScene extends Scene 
 {
 	/**
 	 * Создать сцену завершения игры.

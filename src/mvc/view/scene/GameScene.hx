@@ -7,7 +7,7 @@ import openfl.events.Event;
  * Сцена с основным игровым процессом.
  * @author VolkovRA
  */
-class PlayScene extends Scene 
+class GameScene extends Scene 
 {
 	/**
 	 * Создать сцену основного игрового процесса.

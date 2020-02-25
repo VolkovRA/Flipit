@@ -1,4 +1,4 @@
-package mvc.view.score;
+package mvc.view.other;
 
 import mvc.view.AView;
 import mvc.view.View;
@@ -23,7 +23,7 @@ import ui.Button;
  * Панелька с рекордом.
  * @author VolkovRA
  */
-class HighestScore extends AView 
+class HighestScoreView extends AView 
 {
 	// Приват
 	// Содержимое:

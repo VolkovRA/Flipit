@@ -8,7 +8,7 @@ import openfl.display.Sprite;
  * Кнопка "Как играть?"
  * @author VolkovRA
  */
-class ButtonHowPlay extends Button 
+class HowToPlayButton extends Button 
 {
 	
 	/**

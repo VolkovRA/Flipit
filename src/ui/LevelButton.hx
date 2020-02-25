@@ -15,7 +15,7 @@ import openfl.text.TextFormatAlign;
  * Кнопка выбора игрового уровня.
  * @author VolkovRA
  */
-class ButtonLevel extends Button 
+class LevelButton extends Button 
 {
 	/**
 	 * Отображаемый уровень.

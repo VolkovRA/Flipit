@@ -15,7 +15,7 @@ import openfl.filters.DropShadowFilter;
  * Кнопка: "PLAY".
  * @author VolkovRA
  */
-class ButtonPlay extends Button 
+class PlayButton extends Button 
 {
 	private var sound:Sound;
 	
