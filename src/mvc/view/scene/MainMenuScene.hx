@@ -121,6 +121,6 @@ class MainMenuScene extends Scene
 		Actuate.tween(faq, 0.8, { y:FAQ_Y });
 	}
 	private function onBtMore(e:MouseEvent):Void {
-		Browser.window.open("https://studionx.ru/", "_blank");
+		Browser.window.open(Settings.URL_MORE_GAMES, "_blank");
 	}
 }

@@ -19,4 +19,9 @@ class Settings
 	 * Используется для определения победы.
 	 */
 	static public inline var CHIP_STATE_WIN:ChipState = ChipState.WHITE;
+	
+	/**
+	 * URL Адрес ссылки на кнопке: "Больше игр".
+	 */
+	static public inline var URL_MORE_GAMES:String = "https://studionx.ru/";
 }
