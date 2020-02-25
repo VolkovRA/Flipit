@@ -24,4 +24,14 @@ class Settings
 	 * URL Адрес ссылки на кнопке: "Больше игр".
 	 */
 	static public inline var URL_MORE_GAMES:String = "https://studionx.ru/";
+	
+	/**
+	 * Размеры экрана (ширина) по умолчанию. (px)
+	 */
+	static public inline var DEFAULT_WIDTH:Float = 640;
+	
+	/**
+	 * Размеры экрана (высота) по умолчанию. (px)
+	 */
+	static public inline var DEFAULT_HEIGHT:Float = 480;
 }

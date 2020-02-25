@@ -12,33 +12,33 @@ class GameEvent extends Event
 	/**
 	 * Состояние игры изменилось.
 	 */
-	public static inline var STATE:EventType<Event>				= "gameState";
+	public static inline var STATE:EventType<GameEvent>			= "gameState";
 	
 	/**
 	 * Запуск нового уровня.
 	 * Событие диспетчерезируется, когда запускается новый игровой уровень.
 	 */
-	public static inline var LEVEL_START:EventType<Event>		= "gameLevelStart";
+	public static inline var LEVEL_START:EventType<GameEvent>	= "gameLevelStart";
 	
 	/**
 	 * Счётчик сделанных ходов изменился.
 	 */
-	public static inline var FLIPS:EventType<Event>				= "gameFlips";
+	public static inline var FLIPS:EventType<GameEvent>			= "gameFlips";
 	
 	/**
 	 * Количество набранных очков изменилось.
 	 */
-	public static inline var SCORE:EventType<Event>				= "gameScore";
+	public static inline var SCORE:EventType<GameEvent>			= "gameScore";
 	
 	/**
 	 * Максимаьное количество набранных очков изменилось.
 	 */
-	public static inline var SCORE_MAX:EventType<Event>			= "gameScoreMax";
+	public static inline var SCORE_MAX:EventType<GameEvent>		= "gameScoreMax";
 	
 	/**
 	 * Значение бонуса изменилось.
 	 */
-	public static inline var BONUS:EventType<Event>				= "gameBonus";
+	public static inline var BONUS:EventType<GameEvent>			= "gameBonus";
 	
 	/**
 	 * Создать событие.

@@ -1,21 +1,21 @@
 package mvc.view.scene;
 
 import js.Browser;
+import motion.Actuate;
+import motion.easing.Back;
 import mvc.view.View;
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.events.MouseEvent;
+import openfl.filters.DropShadowFilter;
 import openfl.media.Sound;
 import openfl.text.AntiAliasType;
 import openfl.text.TextField;
+import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFormat;
 import openfl.text.TextFormatAlign;
-import openfl.text.TextFieldAutoSize;
-import openfl.filters.DropShadowFilter;
-import motion.Actuate;
-import motion.easing.Back;
 import ui.MoreGamesButton;
 import ui.PlayButton;
 

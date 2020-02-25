@@ -1,5 +1,6 @@
 package mvc.controller;
 
+import mvc.controller.game.GameController;
 import mvc.model.Model;
 import mvc.view.View;
 import openfl.Assets;
@@ -24,10 +25,18 @@ class Controller extends AController
 	public var view(default, null):View = null;
 	
 	/**
+	 * Игровой контроллер.
+	 * Не может быть null.
+	 */
+	public var game(default, null):GameController;
+	
+	/**
 	 * Создать главный, игровой контроллер.
 	 */
 	public function new() {
 		super(this);
+		
+		game = new GameController(this);
 	}
 	
 	/**

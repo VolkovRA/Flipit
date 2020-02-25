@@ -89,8 +89,6 @@ class ChooseLevelScene extends Scene
 	
 	// ЛИСТЕНЕРЫ
 	private function onLevelChoose(e:LevelsPanelEvent):Void {
-		trace("Select level ID=" + e.level);
-		
-		view.game.showGameOver();
+		view.controller.game.runLevel(e.level);
 	}
 }
