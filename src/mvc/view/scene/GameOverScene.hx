@@ -183,17 +183,19 @@ class GameOverScene extends Scene
 	
 	// ПРИВАТ
 	private function update():Void {
+		var game				= view.model.game;
+		var levelData			= game.data == null ? null : game.data.levels.getItemByID(game.level);
 		
 		// Обновление данных
 		// Достигнутый уровень:
-		progressLevel.text		= "LEVEL: 1";
+		progressLevel.text		= "LEVEL: " + (levelData == null ? "--" : Std.string(levelData.num));
 		progressLevel.setTextFormat(new TextFormat(null, null, 0xffffff), 6);
 		
 		// Набранные очки:
-		progressScore.text		= "0";
+		progressScore.text		= Std.string(game.score);
 		
 		// Максимальный результат:
-		highest.text			= "YOUR HIGHEST SCORE: 0";
+		highest.text			= "YOUR HIGHEST SCORE: " + Std.string(game.highest);
 	}
 	private function playAnimation():Void {
 		

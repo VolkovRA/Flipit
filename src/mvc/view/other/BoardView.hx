@@ -6,6 +6,7 @@ import motion.actuators.GenericActuator;
 import motion.easing.Back;
 import mvc.model.board.Board;
 import mvc.model.board.BoardEvent;
+import mvc.model.game.GameState;
 import mvc.view.AView;
 import mvc.view.View;
 import openfl.Assets;
@@ -168,8 +169,10 @@ class BoardView extends AView
 	}
 	// Гуи:
 	private function onChipPress(e:MouseEvent):Void {
-		var bt:ChipButton = e.currentTarget;
+		if (view.model.game.state != GameState.RUNNING)
+			return;
 		
+		var bt:ChipButton = e.currentTarget;
 		var r = Math.random();
 		if (r < 0.33)
 			tileSound1.play();

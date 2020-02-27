@@ -13,6 +13,7 @@ import openfl.text.AntiAliasType;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFormat;
+import mvc.model.game.GameState;
 import ui.ResetButton;
 import ui.SolveButton;
 import ui.SubmitButton;
@@ -162,6 +163,8 @@ class GameScene extends Scene
 	// Кнопки:
 	private function onPressReset(e:MouseEvent):Void {
 		if (isPressedReset)
+			return;
+		if (view.model.game.state != GameState.RUNNING)
 			return;
 		
 		isPressedReset	= true;
