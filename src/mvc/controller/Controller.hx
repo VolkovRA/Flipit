@@ -55,7 +55,7 @@ class Controller extends AController
 		
 		// Загружаем данные игры:
 		var data = controller.model.parser.json.read(Assets.getText("assets/config/levels.json"));
-		controller.model.game.load(data);
+		controller.model.game.load(data, Settings.PLAYER_ID);
 		
 		// Показываем главное меню и передаём в него управление:
 		view.game.showMainMenu();

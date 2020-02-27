@@ -230,7 +230,7 @@ class ParserJSON extends AModel
 		var item		= new PlayerData();
 		item.id			= data["id"];
 		item.name		= data["name"];
-		item.score		= data["score"];
+		item.highest	= data["highest"];
 		
 		return item;
 	}
@@ -285,7 +285,7 @@ class ParserJSON extends AModel
 		var data:DynamicAccess<Dynamic> = {};
 		data["id"]			= item.id;
 		data["name"]		= item.name;
-		data["score"]		= item.score;
+		data["highest"]		= item.highest;
 		
 		return data;
 	}

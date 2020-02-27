@@ -17,7 +17,15 @@ class DataList<T:DataListItem> extends AModel
 	 * По умолчанию: 0.
 	 */
 	public var length(default, null):Int = 0;
-	
+	/**
+	 * Максимальный ID в списке.
+	 * Это значение проставляется автоматически, когда в список добавляется новая запись с самым большим ID.
+	 * Может использоваться как авто-индекс, для добавления записей с уникальным ID.
+	 * Не изменяется при удалении из списка записи с самым большим ID.
+	 * Сбрасывается при вызове метода: <code>clear()</code>.
+	 * По умолчанию: 0.
+	 */
+	public var maxID:ID = 0;
 	/**
 	 * Список с ключом по ID.
 	 * Не может быть null.
@@ -55,6 +63,9 @@ class DataList<T:DataListItem> extends AModel
 		
 		map[item.id] = item;
 		length ++;
+		
+		if (item.id > maxID)
+			maxID = item.id;
 	}
 	
 	/**
@@ -118,6 +129,7 @@ class DataList<T:DataListItem> extends AModel
 	public function clear():Void {
 		map = new Map();
 		length = 0;
+		maxID = 0;
 	}
 	
 	// Реализация перечисления:

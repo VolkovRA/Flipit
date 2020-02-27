@@ -6,31 +6,26 @@ package mvc.model.game;
  * @author VolkovRA
  */
 @:enum
-abstract GameState(String) {
-	
+abstract GameState(String)
+{
 	/**
 	 * Игра не загружена.
-	 * Для работы с объектом Game, сперва загрузите в него данные игры.
+	 * Для работы с объектом Game, сперва загрузите в него данные вызовом метода: <code>load()</code>.
 	 */
-	var UNLOADED = "unloaded";
-	
+	var UNLOADED	= "unloaded";
 	/**
-	 * Игра загружена и готова к запуску.
+	 * Игра загружена.
+	 * Доступны данные игры, можно запускать любой уровень.
 	 */
-	var READY = "ready";
-	
+	var LOADED		= "ready";
 	/**
-	 * Игра запущена.
+	 * Запущен игровой уровень.
+	 * Идёт активный игровой процесс, не тормози!
 	 */
-	var RUNNING = "running";
-	
+	var RUNNING		= "running";
 	/**
 	 * Уровень пройден.
+	 * Можно запускать следующий левл!
 	 */
-	var LEVEL_COMPLETED = "levelCompleted";
-	
-	/**
-	 * Игра завершена.
-	 */
-	var GAME_OVER = "gameOver";
+	var COMPLETED	= "completed";
 }

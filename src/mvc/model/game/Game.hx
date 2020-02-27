@@ -4,7 +4,9 @@ import mvc.model.AModel;
 import mvc.model.Model;
 import mvc.model.board.Board;
 import mvc.model.data.GameData;
-import mvc.model.data.level.LevelData;
+import mvc.model.data.level.LevelData.LevelID;
+import mvc.model.data.player.PlayerData.PlayerID;
+import mvc.model.data.progress.ProgressData;
 import openfl.errors.Error;
 
 /**
@@ -16,10 +18,13 @@ import openfl.errors.Error;
 class Game extends AModel 
 {
 	/**
-	 * Уменьшение бонуса с каждым ходом в игре.
+	 * Уменьшение бонуса за каждый ход в игре.
 	 */
-	static public inline var BONUS_FLIP_DECREASE:Float		= 10;
-	
+	static public inline var BONUS_FLIP_DECREASE:Float			= 10;
+	/**
+	 * Бонус очков за каждый пройденный уровень.
+	 */
+	static public inline var BONUS_LEVEL_COMPLETED:Float		= 100;
 	
 	// КОМПОЗИЦИЯ
 	/**
@@ -60,15 +65,17 @@ class Game extends AModel
 	/**
 	 * Набранные очки.
 	 * Начисляются за успешное прохождение игроком уровней.
+	 * Не может быть меньше 0.
 	 * По умолчанию: 0.
 	 */
 	public var score(get, set):Float;
 	/**
 	 * Рекорд по очкам.
-	 * Самое лучшее, чего достиг игрок в этой жизни.
+	 * Содержит максимальное количество набранных очков игроком за всё время игры.
+	 * Не может быть меньше 0.
 	 * По умолчанию: 0.
 	 */
-	public var scoreMax(get, set):Float;
+	public var highest(get, set):Float;
 	/**
 	 * Бонус к очкам на этом уровне.
 	 * Вы получаете бонус, если успешно завершаете уровень.
@@ -76,6 +83,12 @@ class Game extends AModel
 	 * По умолчанию: 0.
 	 */
 	public var bonus(get, set):Float;
+	/**
+	 * ID Игрока.
+	 * Указывает на игрока, играющего в эту игру.
+	 * По умолчанию: 0.
+	 */
+	public var player(get, never):PlayerID;
 	
 	// Приват:
 	private var _state:GameState		= GameState.UNLOADED;
@@ -83,7 +96,8 @@ class Game extends AModel
 	private var _flips:Int				= 0;
 	private var _bonus:Float			= 0;
 	private var _score:Float			= 0;
-	private var _scoreMax:Float			= 0;
+	private var _highest:Float			= 0;
+	private var _player:PlayerID		= 0;
 	private var _data:GameData			= null;
 	
 	/**
@@ -99,107 +113,159 @@ class Game extends AModel
 	// АПИ
 	/**
 	 * Загрузить данные игры.
-	 * После успешной загрузки объект Game переходит в состояние: GameState.READY.
-	 * Игра должна находиться в состоянии: GameState.UNLOADED, в противном случае, будет выброшено исключение. Если это не так, сперва выгрузите текущую игру.
+	 * После успешной загрузки объект Game переходит в состояние: GameState.LOADED.
+	 * Все несохранённые данные удаляются.
 	 * @param	data Игровые данные.
+	 * @param	player ID Игрока из данных игры.
 	 */
-	public function load(data:GameData):Void {
+	public function load(data:GameData, player:PlayerID):Void {
 		if (data == null)
 			throw new Error("Игровые данные не должны быть null");
-		if (_state != GameState.UNLOADED)
-			throw new Error("Предыдущая игра не выгружена");
+		if (player == null || player == 0)
+			throw new Error("ID Игрока не должен быть null или 0");
+		
+		var playerData	= data.players.getItemByID(player);
 		
 		_data			= data;
-		_state			= GameState.READY;
+		_state			= GameState.LOADED;
+		_player			= player;
+		_level			= 0;
 		
-		dispatchEvent(new GameEvent(GameEvent.STATE));
+		board.clear();
+		
+		highest			= playerData == null ? 0 : playerData.highest;
+		score			= 0;
+		flips			= 0;
+		bonus			= 0;
+		
+		dispatchEvent(new GameEvent(GameEvent.LOADED));
 	}
 	/**
-	 * Выгрузить игру.
-	 * Все несохранённые данные будут потеряны.
+	 * Выгрузить данные.
+	 * Все несохранённые данные будут потеряны, возвращает объект в исходное состояние.
 	 */
 	public function unload():Void {
 		if (_state == GameState.UNLOADED)
 			return;
 		
-		_data			= null;
 		_state			= GameState.UNLOADED;
+		_data			= null;
+		_player			= 0;
 		_level			= 0;
 		
 		board.clear();
 		
+		bonus			= 0;
 		flips			= 0;
 		score			= 0;
-		scoreMax		= 0;
-		bonus			= 0;
+		highest			= 0;
 		
-		dispatchEvent(new GameEvent(GameEvent.STATE));
+		dispatchEvent(new GameEvent(GameEvent.UNLOADED));
 	}
 	/**
-	 * Запустить уровень.
-	 * Если указанный уровень уже запущен, будет произведён его рестарт.
+	 * Запустить новую игру.
+	 * Сохранённый прогресс удаляется и начинается новая игра с указанного уровня.
 	 * @param	level ID Игрового уровня.
 	 */
-	public function runLevel(level:LevelID):Void {
+	public function startGame(level:LevelID):Void {
 		if (_state == GameState.UNLOADED)
 			throw new Error("Данные игры не загружены");
 		
+		// Данные уровня:
 		var levelData	= _data.levels.getItemByID(level);
 		if (levelData == null)
 			throw new Error("Отсутствуют данные игрового уровня для level=" + level);
 		
+		// Доска:
 		var boardData	= _data.boards.getBoardByLevel(level);
 		if (boardData == null)
 			throw new Error("Отсутствуют данные игровой доски для уровня level=" + level);
 		
-		// Запускаем уровень:
+		// Всё пучком, запускаем новую игру:
 		_state			= GameState.RUNNING;
 		_level			= level;
 		
 		board.setBoardData(boardData);
 		
-		flips			= 0;
-		score			= 0;
-		scoreMax		= 0;
 		bonus			= levelData.bonus;
+		score			= 0;
+		flips			= 0;
 		
-		dispatchEvent(new GameEvent(GameEvent.STATE));
 		dispatchEvent(new GameEvent(GameEvent.LEVEL_START));
 	}
 	/**
-	 * Перезапустить уровень.
-	 * Начинает текущий уровень заного.
+	 * Запустить следующий уровень.
+	 * Вызов этого метода запускает следующий уровень в игре, текущий уровень при этом должен быть пройден!
+	 */
+	public function nextLevel():Void {
+		if (_state != GameState.COMPLETED)
+			throw new Error("Для перехода на следующий уровень необходимо пройти текущий");
+		
+		// Текущий уровень:
+		var levelData	= _data.levels.getItemByID(_level);
+		if (levelData == null)
+			throw new Error("Отсутствуют данные текущего игрового уровня level=" + _level);
+		
+		// Следующий уровень:
+		var nextLevel	= _data.levels.getNextLevel(levelData.num);
+		if (nextLevel == null)
+			throw new Error("Отсутствуют данные для следующего за этим игрового уровня level=" + _level);
+		
+		// Доска:
+		var boardData	= _data.boards.getBoardByLevel(nextLevel.id);
+		if (boardData == null)
+			throw new Error("Отсутствуют данные игровой доски для уровня level=" + nextLevel.id);
+		
+		// Всё пучком, запускаем новую игру:
+		_state			= GameState.RUNNING;
+		_level			= nextLevel.id;
+		
+		board.setBoardData(boardData);
+		
+		bonus			= nextLevel.bonus;
+		flips			= 0;
+		
+		dispatchEvent(new GameEvent(GameEvent.LEVEL_START));
+	}
+	/**
+	 * Начать уровень заного.
+	 * Перезапускает текущий уровень.
 	 */
 	public function reset():Void {
+		if (_state == GameState.UNLOADED)
+			throw new Error("Данные игры не загружены");
+		if (_level == 0)
+			throw new Error("Уровень не запущен");
+		
+		// Данные уровня:
 		var levelData	= _data.levels.getItemByID(level);
 		if (levelData == null)
 			throw new Error("Отсутствуют данные текущего игрового уровня level=" + level);
 		
+		// Доска:
 		var boardData	= _data.boards.getBoardByLevel(level);
 		if (boardData == null)
 			throw new Error("Отсутствуют данные игровой доски для уровня level=" + level);
 		
-		// Запускаем уровень:
+		// Перезапускаем:
 		_state			= GameState.RUNNING;
 		
 		board.setBoardData(boardData);
 		
-		flips			= 0;
-		score			= 0;
-		scoreMax		= 0;
 		bonus			= levelData.bonus;
+		flips			= 0;
 		
-		dispatchEvent(new GameEvent(GameEvent.STATE));
 		dispatchEvent(new GameEvent(GameEvent.LEVEL_START));
 	}
 	/**
-	 * Нажать на фишку.
+	 * Сделать ход.
+	 * Метод доступен только для запущенной игры.
 	 * @param	x Позиция фишки по X.
 	 * @param	y Позиция фишки по Y.
 	 */
-	public function pressChip(x:Int, y:Int):Void {
-		if (_state == GameState.UNLOADED)
-			throw new Error("Данные игры не загружены");
+	public function step(x:Int, y:Int):Void {
+		if (_state != GameState.RUNNING)
+			throw new Error("Игра не запущена");
 		
 		board.changeChip(x, y);
 		board.changeChip(x-1, y);
@@ -209,6 +275,22 @@ class Game extends AModel
 		
 		bonus -= BONUS_FLIP_DECREASE;
 		flips ++;
+		
+		dispatchEvent(new GameEvent(GameEvent.STEP));
+		
+		// Проверка на победу:
+		if (board.checkWin()) {
+			var pr			= new ProgressData();
+			pr.id			= _data.progress.maxID + 1;
+			pr.level		= level;
+			pr.player		= player;
+			pr.completed	= true;
+			_data.progress.add(pr);
+			
+			_state			= GameState.COMPLETED;
+			score			+= BONUS_LEVEL_COMPLETED + bonus;
+			dispatchEvent(new GameEvent(GameEvent.LEVEL_COMPLETED));
+		}
 	}
 	
 	// ГЕТТЕРЫ
@@ -221,8 +303,8 @@ class Game extends AModel
 	function get_score():Float {
 		return _score;
 	}
-	function get_scoreMax():Float {
-		return _scoreMax;
+	function get_highest():Float {
+		return _highest;
 	}
 	function get_bonus():Float {
 		return _bonus;
@@ -233,14 +315,15 @@ class Game extends AModel
 	function get_data():GameData {
 		return _data;
 	}
+	function get_player():PlayerID {
+		return _player;
+	}
 	
 	// СЕТТЕРЫ
 	function set_flips(value:Int):Int {
-		var v:Int;
+		var v:Int = 0;
 		if (value > 0)
 			v = value;
-		else
-			v = 0;
 		
 		if (v == _flips)
 			return value;
@@ -251,11 +334,9 @@ class Game extends AModel
 		return value;
 	}
 	function set_bonus(value:Float):Float {
-		var v:Float;
+		var v:Float = 0;
 		if (value > 0)
 			v = value;
-		else
-			v = 0;
 		
 		if (v == _bonus)
 			return value;
@@ -266,20 +347,26 @@ class Game extends AModel
 		return value;
 	}
 	function set_score(value:Float):Float {
-		if (value == _score)
+		var v:Float = 0;
+		if (value > 0)
+			v = value;
+		if (v == _score)
 			return value;
 		
-		_score = value;
+		_score = v;
 		dispatchEvent(new GameEvent(GameEvent.SCORE));
 		
 		return value;
 	}
-	function set_scoreMax(value:Float):Float {
-		if (value == _scoreMax)
+	function set_highest(value:Float):Float {
+		var v:Float = 0;
+		if (value > 0)
+			v = value;
+		if (v == _highest)
 			return value;
 		
-		_scoreMax = value;
-		dispatchEvent(new GameEvent(GameEvent.SCORE_MAX));
+		_highest = v;
+		dispatchEvent(new GameEvent(GameEvent.HIGHEST));
 		
 		return value;
 	}

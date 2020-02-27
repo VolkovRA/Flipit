@@ -20,10 +20,11 @@ class PlayerData
 	public var name(default, set):String = "Player";
 	
 	/**
-	 * Количество набранных игроком очков.
+	 * Рекорд по очкам.
+	 * Максимальное количество набранных игроком очков за всё время игры.
 	 * По умолчанию: 0.
 	 */
-	public var score:Float = 0;
+	public var highest:Float = 0;
 	
 	/**
 	 * Создать данные игрока.

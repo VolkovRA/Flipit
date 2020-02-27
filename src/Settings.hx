@@ -1,6 +1,7 @@
 package;
 
 import mvc.model.chip.ChipState;
+import mvc.model.data.player.PlayerData.PlayerID;
 
 /**
  * Статический класс констант.
@@ -34,4 +35,11 @@ class Settings
 	 * Размеры экрана (высота) по умолчанию. (px)
 	 */
 	static public inline var DEFAULT_HEIGHT:Float = 480;
+	
+	/**
+	 * ID Игрока, используемого в игре.
+	 * Это одиночная игра, поэтому, тут всегда только один игрок.
+	 * Смена ID приведёт к потере всего сохранённого, локального прогресса в игре.
+	 */
+	static public inline var PLAYER_ID:PlayerID = 77;
 }

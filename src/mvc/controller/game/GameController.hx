@@ -32,7 +32,7 @@ class GameController extends AController
 		if (data == null)
 			throw new Error("Отсутствуют данные уровня id=" + level);
 		
-		game.runLevel(level);
+		game.startGame(level);
 		controller.view.game.showGame();
 	}
 }

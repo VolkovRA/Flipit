@@ -177,8 +177,8 @@ class BoardView extends AView
 			tileSound2.play();
 		else
 			tileSound3.play();
-			
-		view.model.game.pressChip(bt.indexX, bt.indexY);
+		
+		view.model.game.step(bt.indexX, bt.indexY);
 	}
 	
 	// ПРИВАТ
