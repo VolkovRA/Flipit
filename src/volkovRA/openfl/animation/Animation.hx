@@ -243,6 +243,7 @@ class Animation extends Sprite
 		if (frame == _currentFrame)
 			return value;
 		
+		_currentFrame = frame;
 		removeChildren();
 		
 		if (_frames[frame-1] != null)
