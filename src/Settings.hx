@@ -23,7 +23,7 @@ class Settings
 	/**
 	 * URL Адрес ссылки на кнопке: "Больше игр".
 	 */
-	static public inline var URL_MORE_GAMES:String = "https://studionx.ru/";
+	static public inline var URL_MORE_GAMES:String = "//milkytap.ru/";
 	
 	/**
 	 * Размеры экрана (ширина) по умолчанию. (px)
