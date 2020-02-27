@@ -5,7 +5,7 @@ import mvc.model.Model;
 import mvc.model.board.Board;
 import mvc.model.data.GameData;
 import mvc.model.data.level.LevelData.LevelID;
-import mvc.model.data.player.PlayerData.PlayerID;
+import mvc.model.data.player.PlayerData;
 import mvc.model.data.progress.ProgressData;
 import openfl.errors.Error;
 
@@ -280,15 +280,31 @@ class Game extends AModel
 		
 		// Проверка на победу:
 		if (board.checkWin()) {
-			var pr			= new ProgressData();
-			pr.id			= _data.progress.maxID + 1;
-			pr.level		= level;
-			pr.player		= player;
-			pr.completed	= true;
-			_data.progress.add(pr);
+			_state				= GameState.COMPLETED;
+			score				+= BONUS_LEVEL_COMPLETED + bonus;
+			highest				= score > highest ? score : highest;
 			
-			_state			= GameState.COMPLETED;
-			score			+= BONUS_LEVEL_COMPLETED + bonus;
+			// Прогресс игрока
+			// Игрок:
+			var pData			= _data.players.getItemByID(_player);
+			if (pData == null) {
+				pData			= new PlayerData();
+				pData.id		= _player;
+				_data.players.add(pData);
+			}
+			pData.highest		= highest;
+			
+			// Уровень:
+			var prData			= _data.progress.getPlayerOfLevel(_player, _level);
+			if (prData == null) {
+				prData			= new ProgressData();
+				prData.id		= _data.progress.maxID + 1;
+				prData.level	= _level;
+				prData.player	= _player;
+			}
+			prData.completed	= true;
+			
+			// Событие победы:
 			dispatchEvent(new GameEvent(GameEvent.LEVEL_COMPLETED));
 		}
 	}
