@@ -67,6 +67,31 @@ class Board extends AModel
 	}
 	
 	/**
+	 * Переключить фишку.
+	 * Меняет состояние указанной фишки на противоположное.
+	 * Вызов игнорируется, если указанный диапазон x или y выходит за рамки доски.
+	 * @param	x Позиция фишки по X.
+	 * @param	y Позиция фишки по Y.
+	 */
+	public function changeChip(x:Int, y:Int):Void {
+		if (x < 0)			return;
+		if (y < 0)			return;
+		if (x >= width)		return;
+		if (y >= height)	return;
+		
+		switch (_chips[x][y]) {
+			case ChipState.BLACK:	_chips[x][y] = ChipState.WHITE;
+			case ChipState.WHITE:	_chips[x][y] = ChipState.BLACK;
+			default:				throw new Error("Неизвестное состояние фишки state=" + _chips[x][y]);
+		}
+		
+		var e = new BoardEvent(BoardEvent.CHIP_STATE);
+		e.x = x;
+		e.y = y;
+		dispatchEvent(e);
+	}
+	
+	/**
 	 * Получить состояние фишки.
 	 * Возвращает состояние указанной фишки на игровом поле.
 	 * @param	x Позиция фишки по ширине. (От 0 до width-1)

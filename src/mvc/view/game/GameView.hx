@@ -1,10 +1,10 @@
 package mvc.view.game;
 
 import mvc.view.View;
-import mvc.view.scene.MainMenuScene;
-import mvc.view.scene.GameOverScene;
 import mvc.view.scene.ChooseLevelScene;
+import mvc.view.scene.GameOverScene;
 import mvc.view.scene.GameScene;
+import mvc.view.scene.MainMenuScene;
 import mvc.view.scene.SceneManager;
 
 /**

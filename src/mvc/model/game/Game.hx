@@ -15,6 +15,12 @@ import openfl.errors.Error;
  */
 class Game extends AModel 
 {
+	/**
+	 * Уменьшение бонуса с каждым ходом в игре.
+	 */
+	static public inline var BONUS_FLIP_DECREASE:Float		= 10;
+	
+	
 	// КОМПОЗИЦИЯ
 	/**
 	 * Игровая доска. (read-only)
@@ -108,7 +114,6 @@ class Game extends AModel
 		
 		dispatchEvent(new GameEvent(GameEvent.STATE));
 	}
-	
 	/**
 	 * Выгрузить игру.
 	 * Все несохранённые данные будут потеряны.
@@ -130,7 +135,6 @@ class Game extends AModel
 		
 		dispatchEvent(new GameEvent(GameEvent.STATE));
 	}
-	
 	/**
 	 * Запустить уровень.
 	 * Если указанный уровень уже запущен, будет произведён его рестарт.
@@ -157,10 +161,54 @@ class Game extends AModel
 		flips			= 0;
 		score			= 0;
 		scoreMax		= 0;
-		bonus			= 0;
+		bonus			= levelData.bonus;
 		
 		dispatchEvent(new GameEvent(GameEvent.STATE));
 		dispatchEvent(new GameEvent(GameEvent.LEVEL_START));
+	}
+	/**
+	 * Перезапустить уровень.
+	 * Начинает текущий уровень заного.
+	 */
+	public function reset():Void {
+		var levelData	= _data.levels.getItemByID(level);
+		if (levelData == null)
+			throw new Error("Отсутствуют данные текущего игрового уровня level=" + level);
+		
+		var boardData	= _data.boards.getBoardByLevel(level);
+		if (boardData == null)
+			throw new Error("Отсутствуют данные игровой доски для уровня level=" + level);
+		
+		// Запускаем уровень:
+		_state			= GameState.RUNNING;
+		
+		board.setBoardData(boardData);
+		
+		flips			= 0;
+		score			= 0;
+		scoreMax		= 0;
+		bonus			= levelData.bonus;
+		
+		dispatchEvent(new GameEvent(GameEvent.STATE));
+		dispatchEvent(new GameEvent(GameEvent.LEVEL_START));
+	}
+	/**
+	 * Нажать на фишку.
+	 * @param	x Позиция фишки по X.
+	 * @param	y Позиция фишки по Y.
+	 */
+	public function pressChip(x:Int, y:Int):Void {
+		if (_state == GameState.UNLOADED)
+			throw new Error("Данные игры не загружены");
+		
+		board.changeChip(x, y);
+		board.changeChip(x-1, y);
+		board.changeChip(x+1, y);
+		board.changeChip(x, y-1);
+		board.changeChip(x, y + 1);
+		
+		bonus -= BONUS_FLIP_DECREASE;
+		flips ++;
 	}
 	
 	// ГЕТТЕРЫ
@@ -188,19 +236,31 @@ class Game extends AModel
 	
 	// СЕТТЕРЫ
 	function set_flips(value:Int):Int {
-		if (value == _flips)
+		var v:Int;
+		if (value > 0)
+			v = value;
+		else
+			v = 0;
+		
+		if (v == _flips)
 			return value;
 		
-		_flips = value;
+		_flips = v;
 		dispatchEvent(new GameEvent(GameEvent.FLIPS));
 		
 		return value;
 	}
 	function set_bonus(value:Float):Float {
-		if (value == _bonus)
+		var v:Float;
+		if (value > 0)
+			v = value;
+		else
+			v = 0;
+		
+		if (v == _bonus)
 			return value;
 		
-		_bonus = value;
+		_bonus = v;
 		dispatchEvent(new GameEvent(GameEvent.BONUS));
 		
 		return value;

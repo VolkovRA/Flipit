@@ -13,13 +13,13 @@ class BoardEvent extends Event
 	 * Изменение всей доски.
 	 * Это событие диспетчерезируется при изменений размеров самой доски или при массовом изменении состояния сразу нескольких фишек.
 	 */
-	public static inline var CHANGE:EventType<Event>			= "boardChange";
+	public static inline var CHANGE:EventType<BoardEvent>		= "boardChange";
 	
 	/**
 	 * Изменение состояния игровой фишки.
 	 * Это событие используется при единичном изменении состояния у одной фишки.
 	 */
-	public static inline var CHIP_STATE:EventType<Event>		= "boardChipState";
+	public static inline var CHIP_STATE:EventType<BoardEvent>	= "boardChipState";
 	
 	/**
 	 * Позиция фишки по X.

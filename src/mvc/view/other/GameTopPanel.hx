@@ -8,6 +8,7 @@ import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.events.Event;
 import openfl.filters.DropShadowFilter;
+import openfl.media.Sound;
 import openfl.text.AntiAliasType;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
@@ -36,6 +37,7 @@ class GameTopPanel extends AView
 	private var bonusTitle:TextField;
 	private var scoreTitle:TextField;
 	private var flipsTitle:TextField;
+	private var bonusZero:Sound;
 	private var bg:Bitmap;
 	
 	/**
@@ -46,8 +48,11 @@ class GameTopPanel extends AView
 		super(view);
 		
 		// Построение
+		// Звук:
+		bonusZero						= Assets.getSound("assets/sound/bonus_out.mp3");
+		
 		// Фон:
-		bg = new Bitmap(Assets.getBitmapData("assets/image/head.png"));
+		bg								= new Bitmap(Assets.getBitmapData("assets/image/head.png"));
 		addChild(bg);
 		
 		// Уровень
@@ -184,6 +189,9 @@ class GameTopPanel extends AView
 	}
 	private function onGameBonus(e:GameEvent):Void {
 		update();
+		
+		if (game != null && game.bonus == 0)
+			bonusZero.play();
 	}
 	
 	// ПРИВАТ
