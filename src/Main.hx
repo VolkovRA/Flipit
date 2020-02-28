@@ -15,19 +15,19 @@ class Main extends Sprite
 	 * Главная, игровая модель.
 	 * Не может быть null.
 	 */
-	static public var model(default, null):Model = null;
+	static public var model(default, null):Model;
 	
 	/**
 	 * Главный, игровой визуализатор.
 	 * Не может быть null.
 	 */
-	static public var view(default, null):View = null;
+	static public var view(default, null):View;
 	
 	/**
 	 * Главный, игровой контроллер.
 	 * Не может быть null.
 	 */
-	static public var controller(default, null):Controller = null;
+	static public var controller(default, null):Controller;
 	
 	/**
 	 * Точка входа.
@@ -35,13 +35,11 @@ class Main extends Sprite
 	public function new() {
 		super();
 		
-		model = new Model();
-		controller = new Controller();
-		view = new View(model, controller);
-		
+		model		= new Model();
+		controller	= new Controller();
+		view		= new View(model, controller);
 		this.addChild(view);
 		
-		// Запуск:
-		controller.run(model, view);
+		controller.start(model, view);
 	}
 }

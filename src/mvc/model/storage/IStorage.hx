@@ -1,6 +1,7 @@
 package mvc.model.storage;
 
 import mvc.model.data.GameData;
+import mvc.model.parser.ParserOptions;
 
 /**
  * Хранилище данных.
@@ -14,27 +15,29 @@ interface IStorage
 	 * Выполняется асинхронная загрузка игровых данных из внешней системы.
 	 * Обратите внимание, что вызов колбека может произойти в этот-же момент, если внешняя среда фактически выполняет загрузку синхронно.
 	 * @param	callback Функция обратного вызова завершения операции.
+	 * @param	to Объект для заполнения данными. Если null - создаётся новый.
+	 * @param	options Опций для выбора загружаемых данных.
 	 */
-	public function load(callback:StorageCallbackLoaded = null):Void;
+	public function load(callback:StorageCallbackLoaded = null, to:GameData = null, options:ParserOptions = null):Void;
 	/**
 	 * Созранить игровые данные.
 	 * Выполняется запись игровых данных во внешнюю систему.
 	 * Обратите внимание, что вызов колбека может произойти в этот-же момент, если внешняя среда фактически выполняет сохранение синхронно.
 	 * @param	data Записываемые игровые данные.
 	 * @param	callback Функция обратного вызова завершения операции.
+	 * @param	options Опций для выбора сохраняемых данных.
 	 */
-	public function save(data:GameData, callback:StorageCallbackSaved = null):Void;
+	public function save(data:GameData, callback:StorageCallbackSaved = null, options:ParserOptions = null):Void;
 }
 /**
  * Функция обратного вызова завершения загрузки данных.
  * Если во время загрузки или разбора данных произошла ошибка, она передаётся в качестве первого аргумента функции.
- * Если данные успешно загружены, они передаются вторым аргументом.
+ * Если данные успешно загружены, они передаются вторым аргументом. (Может быть null, если данные загрузить не удалось и они не были переданы в to)
  */
 typedef StorageCallbackLoaded = StorageError->GameData->Void;
 /**
  * Функция обратного вызова завершения загрузки данных.
  * Если во время загрузки или разбора данных произошла ошибка, она передаётся в качестве первого аргумента функции.
- * Если данные успешно загружены, они передаются вторым аргументом.
  */
 typedef StorageCallbackSaved = StorageError->Void;
 /**

@@ -15,7 +15,7 @@ interface IParser
 	 * @param	str Игровые данные в формате парсера.
 	 * @param	to Объект для записи, если null - создаётся новый объект, иначе данные пишутся (добавляются) в переданный.
 	 * @param	options Опций разбора, если null - будут прочитаны все имеющиеся данные, иначе только отмеченные флагом true.
-	 * @return	Прочитанные, игровые данные.
+	 * @return	Прочитанные, игровые данные. (Не может быть null)
 	 */
 	public function read(str:String, to:GameData = null, options:ParserOptions = null):GameData;
 	
@@ -24,7 +24,7 @@ interface IParser
 	 * Записывает переданные игровые данные в строку формата парсера.
 	 * @param	data Игровые данные.
 	 * @param	options Опций разбора, если null - будут записаны все имеющиеся данные, иначе только отмеченные флагом true.
-	 * @return	Возвращает строку в формате парсера.
+	 * @return	Возвращает строку в формате парсера. (Не может быть null)
 	 */
 	public function write(data:GameData, options:ParserOptions = null):String;
 }

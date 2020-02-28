@@ -32,8 +32,8 @@ class Model extends AModel
 	public function new() {
 		super(this);
 		
-		parser	= new ParserManager(this);
 		game	= new Game(this);
+		parser	= new ParserManager(this);
 		storage	= new StorageManager(this);
 	}
 }
