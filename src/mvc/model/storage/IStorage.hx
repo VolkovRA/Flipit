@@ -3,7 +3,7 @@ package mvc.model.storage;
 import mvc.model.data.GameData;
 
 /**
- * Хранилище игровых данных.
+ * Хранилище данных.
  * Обеспечивает сохранение и загрузку игровых данных из внешней системы.
  * @author VolkovRA
  */
@@ -38,7 +38,7 @@ typedef StorageCallbackLoaded = StorageError->GameData->Void;
  */
 typedef StorageCallbackSaved = StorageError->Void;
 /**
- * Ошибка.
+ * Ошибка хранилища.
  * Объект описывает ошибку, произошедшую во время выполнения любой операции с хранилищем.
  * Это может быть: <code>js.Error</code>, <code>openfl.errors.Error</code>, или ещё какой нибудь "Error", в зависимости от реализации хранилища.
  */

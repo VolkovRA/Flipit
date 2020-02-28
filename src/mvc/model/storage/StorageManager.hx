@@ -7,7 +7,7 @@ import mvc.model.storage.local.BrowserStorage;
 
 /**
  * Менеджер хранилищей игровых данных.
- * Содержит все доступные хранилища для игровых данных.
+ * Содержит все доступные хранилища данных.
  * @author VolkovRA
  */
 class StorageManager extends AModel 
