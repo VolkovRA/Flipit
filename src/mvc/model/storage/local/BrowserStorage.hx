@@ -29,6 +29,14 @@ class BrowserStorage extends AModel implements IStorage
 			return;
 		}
 		
+		// Пусто?
+		if (str == null || str.length == 0) {
+			if (callback != null)
+				callback(null, null);
+			
+			return;
+		}
+		
 		// Ожидаем JSON:
 		var data:GameData = null;
 		try {
