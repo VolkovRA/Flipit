@@ -21,7 +21,7 @@ import openfl.errors.Error;
  * Парсер игровых данных из формата JSON.
  * @author VolkovRA
  */
-class ParserJSON extends AModel 
+class ParserJSON extends AModel implements IParser
 {
 	static private inline var KEY_VERSION:String		= "version";
 	static private inline var KEY_LEVELS:String			= "levels";
@@ -37,14 +37,7 @@ class ParserJSON extends AModel
 		super(model);
 	}
 	
-	/**
-	 * Прочитать игровые данные из формата JSON.
-	 * Считывает данные из переданной строки и записывает их в указанный объект GameData, либо создаёт новый, если он не передан.
-	 * @param	str Строка игровых данных в формате JSON.
-	 * @param	to Объект для записи, если null - создаётся новый объект, иначе данные пишутся (добавляются) в переданный.
-	 * @param	options Опций разбора, если null - будут прочитаны все имеющиеся данные, иначе только отмеченные флагом true.
-	 * @return	Игровые данные.
-	 */
+	// АПИ
 	public function read(str:String, to:GameData = null, options:ParserOptions = null):GameData {
 		if (str == null)
 			throw new Error("Игровые данные для чтения не должны быть null");
@@ -85,14 +78,6 @@ class ParserJSON extends AModel
 		
 		return to;
 	}
-	
-	/**
-	 * Записать игровые данные в строку формата JSON.
-	 * Записывает переданные игровые данные в строку формата JSON.
-	 * @param	data Игровые данные.
-	 * @param	options Опций разбора, если null - будут записаны все имеющиеся данные, иначе только отмеченные флагом true.
-	 * @return	Возвращает строку формата JSON.
-	 */
 	public function write(data:GameData, options:ParserOptions = null):String {
 		if (data == null)
 			throw new Error("Игровые данные для записи не должны быть null");
@@ -266,10 +251,31 @@ class ParserJSON extends AModel
 	// ЗАПИСЬ
 	// Уровни:
 	private function writeLevelList(list:LevelDataList):Array<DynamicAccess<Dynamic>> {
-		throw new Error("Функционал не реализован");
+		var arr:Array<DynamicAccess<Dynamic>> = new Array();
+		
+		for (item in list)
+			arr.push(writeLevel(item));
+		
+		return arr;
+	}
+	private function writeLevel(item:LevelData):DynamicAccess<Dynamic> {
+		var data:DynamicAccess<Dynamic> = {};
+		data["id"]			= item.id;
+		data["num"]			= item.num;
+		data["bonus"]		= item.bonus;
+		
+		return data;
 	}
 	// Доски:
 	private function writeBoardList(list:BoardDataList):Array<DynamicAccess<Dynamic>> {
+		var arr:Array<DynamicAccess<Dynamic>> = new Array();
+		
+		for (item in list)
+			arr.push(writeBoard(item));
+		
+		return arr;
+	}
+	private function writeBoard(item:BoardData):DynamicAccess<Dynamic> {
 		throw new Error("Функционал не реализован");
 	}
 	// Игроки:

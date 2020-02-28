@@ -1,7 +1,7 @@
 package mvc.model;
 
 import mvc.model.game.Game;
-import mvc.model.parser.Parser;
+import mvc.model.parser.ParserManager;
 import mvc.model.storage.StorageManager;
 
 /**
@@ -11,10 +11,10 @@ import mvc.model.storage.StorageManager;
 class Model extends AModel 
 {
 	/**
-	 * Парсер игровых данных.
+	 * Парсеры игровых данных.
 	 * Не может быть null.
 	 */
-	public var parser(default, null):Parser;
+	public var parser(default, null):ParserManager;
 	/**
 	 * Хранилища игровых данных.
 	 * Не может быть null.
@@ -24,7 +24,7 @@ class Model extends AModel
 	 * Экземпляр запущенной игры.
 	 * Не может быть null.
 	 */
-	public var game(default, null):Game = null;
+	public var game(default, null):Game;
 	
 	/**
 	 * Создать главную, игровую модель.
@@ -32,7 +32,7 @@ class Model extends AModel
 	public function new() {
 		super(this);
 		
-		parser	= new Parser(this);
+		parser	= new ParserManager(this);
 		game	= new Game(this);
 		storage	= new StorageManager(this);
 	}

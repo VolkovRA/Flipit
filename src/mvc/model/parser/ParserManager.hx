@@ -5,20 +5,20 @@ import mvc.model.Model;
 import mvc.model.parser.json.ParserJSON;
 
 /**
- * Парсер игровых данных.
- * Класс содержит реализацию парсеров для целевого формата данных.
+ * Менеджер парсеров.
+ * Содержит все доступные парсеры.
  * @author VolkovRA
  */
-class Parser extends AModel 
+class ParserManager extends AModel 
 {
 	/**
 	 * JSON Парсер.
 	 * Не может быть null.
 	 */
-	public var json(default, null):ParserJSON;
+	public var json(default, null):IParser;
 	
 	/**
-	 * Создать парсер игровых данных.
+	 * Создать менеджер парсеров.
 	 * @param	model Главная модель.
 	 */
 	public function new(model:Model) {
