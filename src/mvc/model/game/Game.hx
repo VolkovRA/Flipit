@@ -301,6 +301,7 @@ class Game extends AModel
 				prData.id		= _data.progress.maxID + 1;
 				prData.level	= _level;
 				prData.player	= _player;
+				_data.progress.add(prData);
 			}
 			prData.completed	= true;
 			
@@ -382,6 +383,13 @@ class Game extends AModel
 			return value;
 		
 		_highest = v;
+		
+		if (_data != null) {
+			var pData = _data.players.getItemByID(_player);
+			if (pData != null)
+				pData.highest = 0;
+		}
+		
 		dispatchEvent(new GameEvent(GameEvent.HIGHEST));
 		
 		return value;

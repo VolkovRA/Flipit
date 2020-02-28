@@ -4,6 +4,8 @@ import mvc.controller.game.GameController;
 import mvc.model.Model;
 import mvc.model.data.GameData;
 import mvc.model.storage.IStorage.StorageError;
+import mvc.model.parser.ParserOptions;
+import mvc.model.game.GameEvent;
 import mvc.view.View;
 import openfl.errors.Error;
 
@@ -13,6 +15,9 @@ import openfl.errors.Error;
  */
 class Controller extends AController 
 {
+	static private var OPTIONS_GAME:ParserOptions		= { levels:true, boards:true };
+	static private var OPTIONS_PLAYER:ParserOptions		= { players:true, progress:true };
+	
 	/**
 	 * Главная, игровая модель.
 	 * Не может быть null после запуска игры.
@@ -51,14 +56,14 @@ class Controller extends AController
 		this.view	= view;
 		
 		// Загружаем игровые данные:
-		model.storage.assets.load(onGameDataLoaded, null, { boards:true, levels:true });
+		model.storage.assets.load(onGameDataLoaded, null, OPTIONS_GAME);
 	}
 	private function onGameDataLoaded(error:StorageError, data:GameData):Void {
 		if (error != null)
 			throw new Error("Ошибка загрузки данных игры\n" + Std.string(error));
 		
 		// Подгружаем данные игрока:
-		model.storage.browser.load(onPlayerDataLoaded, data, { players:true, progress:true });
+		model.storage.browser.load(onPlayerDataLoaded, data, OPTIONS_PLAYER);
 	}
 	private function onPlayerDataLoaded(error:StorageError, data:GameData):Void {
 		if (error != null)
@@ -67,7 +72,31 @@ class Controller extends AController
 		// Все данные загружены, запускаем игру:
 		controller.model.game.load(data, Settings.PLAYER_ID);
 		
+		// Сохранение игры при каждом завершении игрового уровня:
+		controller.model.game.addEventListener(GameEvent.LEVEL_COMPLETED, onLevelCompleted);
+		
 		// Переходим в главное меню, передаём управление пользователю:
 		view.game.showMainMenu();
+	}
+	
+	/**
+	 * Сохранить игру.
+	 * Выполняется сохранение прогресса игрока в браузере.
+	 */
+	public function saveProgress():Void {
+		controller.model.storage.browser.save(controller.model.game.data, null, OPTIONS_PLAYER);
+	}
+	/**
+	 * Сбросить рекорд.
+	 * Выполняется сброс очков, набранных игроком.
+	 */
+	public function resetHighest():Void {
+		controller.model.game.highest = 0;
+		controller.model.storage.browser.save(controller.model.game.data, null, OPTIONS_PLAYER);
+	}
+	
+	// ЛИСТЕНЕРЫ
+	private function onLevelCompleted(e:GameEvent):Void {
+		saveProgress();
 	}
 }

@@ -143,7 +143,8 @@ class HighestScoreView extends AView
 		mOver.play();
 	}
 	private function onResetClick(e:MouseEvent):Void {
-		trace("Reset!");
+		view.controller.resetHighest();
+		updateScore();
 		
 		circle.visible	= true;
 		circle.scaleX	= 1;
@@ -157,6 +158,6 @@ class HighestScoreView extends AView
 	
 	// ПРИВАТ
 	private function updateScore():Void {
-		score.text = "0";
+		score.text = Std.string(view.model.game.highest);
 	}
 }

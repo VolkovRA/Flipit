@@ -226,7 +226,7 @@ class ParserJSON extends AModel implements IParser
 		
 		var i = arr.length;
 		while (i-- > 0)
-			to.players.add(readPlayer(arr[i]));
+			to.progress.add(readProgress(arr[i]));
 	}
 	private function readProgress(data:DynamicAccess<Dynamic>):ProgressData {
 		if (data == null)
