@@ -52,7 +52,7 @@ class BoardView extends AView
 	 * Если какая-то анимация уже воспроизводится - она прекращается а её предыдущий колбек затирается.
 	 * @param	callback Функция обратного вызова после завершения анимации.
 	 */
-	public function playAnimationIn(callback:BoardView->Void = null):Void {
+	public function playAnimationIn(callback:Void->Void = null):Void {
 		stopAnimation();
 		
 		if (chips != null && chips.length > 0 && chips[0].length > 0) {
@@ -89,7 +89,7 @@ class BoardView extends AView
 	 * Если какая-то анимация уже воспроизводится - она прекращается а её предыдущий колбек затирается.
 	 * @param	callback Функция обратного вызова после завершения анимации.
 	 */
-	public function playAnimationOut(callback:BoardView->Void = null):Void {
+	public function playAnimationOut(callback:Void->Void = null):Void {
 		stopAnimation();
 		
 		if (chips != null && chips.length > 0 && chips[0].length > 0) {
@@ -106,6 +106,39 @@ class BoardView extends AView
 					chip.mouseEnabled	= false;
 					
 					tween			= Actuate.tween(chip, 0.5, { alpha:0, scaleX:2, scaleY:2 }).delay(delay).ease(Back.easeIn);
+					
+					delay			+= 0.05;
+					y ++;
+				}
+				x ++;
+			}
+			
+			if (callback != null)
+				tween.onComplete(callback);
+		}
+	}
+	/**
+	 * Воспроизвести анимацию победного удаления.
+	 * Если какая-то анимация уже воспроизводится - она прекращается а её предыдущий колбек затирается.
+	 * @param	callback Функция обратного вызова после завершения анимации.
+	 */
+	public function playAnimationComplete(callback:Void->Void = null):Void {
+		stopAnimation();
+		
+		if (chips != null && chips.length > 0 && chips[0].length > 0) {
+			var width				= chips.length;
+			var height				= chips[0].length;
+			var x:Int				= 0;
+			var delay:Float			= 2;
+			var tween:GenericActuator<ChipButton> = null;
+			while (x < width) {
+				var y				= 0;
+				while (y < height) {
+					var chip		= chips[x][y];
+					chip.mouseChildren	= false;
+					chip.mouseEnabled	= false;
+					
+					tween			= Actuate.tween(chip, 0.5, { x:72, y:-250 }).delay(delay).ease(Back.easeIn);
 					
 					delay			+= 0.05;
 					y ++;

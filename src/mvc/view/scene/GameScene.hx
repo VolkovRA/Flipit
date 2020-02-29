@@ -2,9 +2,13 @@ package mvc.view.scene;
 
 import js.Browser;
 import motion.Actuate;
+import mvc.model.game.Game;
+import mvc.model.game.GameEvent;
+import mvc.model.game.GameState;
 import mvc.view.View;
 import mvc.view.other.BoardView;
 import mvc.view.other.GameTopPanel;
+import mvc.view.other.LevelCompletedView;
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.events.Event;
@@ -13,7 +17,6 @@ import openfl.text.AntiAliasType;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFormat;
-import mvc.model.game.GameState;
 import ui.ResetButton;
 import ui.SolveButton;
 import ui.SubmitButton;
@@ -39,6 +42,7 @@ class GameScene extends Scene
 	private var submit:SubmitButton;
 	private var solve:SolveButton;
 	private var board:BoardView;
+	private var victory:LevelCompletedView;
 	// Флаги:
 	private var isPressedReset:Bool;
 	private var isPressedSubmit:Bool;
@@ -112,6 +116,13 @@ class GameScene extends Scene
 		board.y					= 202;
 		addChild(board);
 		
+		// Анимация завершения уровня:
+		victory					= new LevelCompletedView(view);
+		victory.game			= view.model.game;
+		victory.mouseChildren	= false;
+		victory.mouseEnabled	= false;
+		addChild(victory);
+		
 		// События:
 		addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
@@ -120,6 +131,8 @@ class GameScene extends Scene
 	// ЛИСТЕНЕРЫ
 	// Общее:
 	private function onAddedToStage(e:Event):Void {
+		addGameListeners(view.model.game);
+		
 		isPressedReset	= false;
 		isPressedSubmit	= false;
 		
@@ -158,7 +171,13 @@ class GameScene extends Scene
 		board.playAnimationIn();
 	}
 	private function onRemovedFromStage(e:Event):Void {
+		removeGameListeners(view.model.game);
 		board.board = null;
+	}
+	// Игра:
+	private function onGameLevelComplete(e:GameEvent):Void {
+		victory.playAnimation();
+		board.playAnimationComplete(onAnimationLevelCompleted);
 	}
 	// Кнопки:
 	private function onPressReset(e:MouseEvent):Void {
@@ -209,12 +228,24 @@ class GameScene extends Scene
 		Browser.alert("Эта функция появится в следующей версии игры!");
 	}
 	// Анимаций:
-	private function onAnimationResetCompleted(board:BoardView):Void {
+	private function onAnimationResetCompleted():Void {
 		this.isPressedReset = false;
 		this.view.model.game.reset();
 		this.board.playAnimationIn();
 	}
-	private function onAnimationSubmitCompleted(board:BoardView):Void {
+	private function onAnimationSubmitCompleted():Void {
 		this.view.game.showGameOver();
+	}
+	private function onAnimationLevelCompleted():Void {
+		view.model.game.nextLevel();
+		board.playAnimationIn();
+	}
+	
+	// ПРИВАТ
+	private function addGameListeners(game:Game):Void {
+		game.addEventListener(GameEvent.LEVEL_COMPLETED, onGameLevelComplete);
+	}
+	private function removeGameListeners(game:Game):Void {
+		game.removeEventListener(GameEvent.LEVEL_COMPLETED, onGameLevelComplete);
 	}
 }

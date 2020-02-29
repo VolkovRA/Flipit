@@ -14,6 +14,8 @@ import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFormat;
 import openfl.text.TextFormatAlign;
+import motion.Actuate;
+import motion.easing.Quad;
 
 /**
  * Верхняя панель в основной игре.
@@ -193,6 +195,24 @@ class GameTopPanel extends AView
 		if (game != null && game.bonus == 0)
 			bonusZero.play();
 	}
+	private function onGameStartLevel(e:GameEvent):Void {
+		update();
+		
+		Actuate.stop(level);
+		
+		level.x							= levelTitle.x - 2;
+		level.y							= levelTitle.y;
+		level.scaleX					= 1;
+		level.scaleY					= 1;
+		
+		var scale						= 1.5;
+		var posX						= (level.x + level.width / 2) - (level.width * scale) / 2;
+		var posY						= (level.y + level.height / 2) - (level.height * scale) / 2;
+		
+		Actuate.tween(level, 0.4, { scaleX:scale, scaleY:scale, x:posX, y:posY }).ease(Quad.easeOut).onComplete(function(){
+			Actuate.tween(level, 0.4, { scaleX:1, scaleY:1, x:levelTitle.x - 2, y:levelTitle.y }).ease(Quad.easeIn);
+		});
+	}
 	
 	// ПРИВАТ
 	private function update():Void {
@@ -215,11 +235,13 @@ class GameTopPanel extends AView
 		game.addEventListener(GameEvent.BONUS, onGameBonus);
 		game.addEventListener(GameEvent.FLIPS, onGameFlips);
 		game.addEventListener(GameEvent.SCORE, onGameScore);
+		game.addEventListener(GameEvent.LEVEL_START, onGameStartLevel);
 	}
 	private function removeGameListeners(game:Game):Void {
 		game.removeEventListener(GameEvent.BONUS, onGameBonus);
 		game.removeEventListener(GameEvent.FLIPS, onGameFlips);
 		game.removeEventListener(GameEvent.SCORE, onGameScore);
+		game.removeEventListener(GameEvent.LEVEL_START, onGameStartLevel);
 	}
 	
 	// СЕТТЕРЫ
