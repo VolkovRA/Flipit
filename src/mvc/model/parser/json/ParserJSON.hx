@@ -148,43 +148,43 @@ class ParserJSON extends AModel implements IParser
 		if (!Std.is(arr, Array))
 			throw new Error("Некорректное описание расположения фишек на игровой доске: id=" + item.id + ", ожидался массив массивов с Int, получено: " + arr);
 		
-		var width:Int = arr.length;
-		if (width <= 0)
+		var height:Int = arr.length;
+		if (height <= 0)
 			throw new Error("Игровая доска: id=" + item.id + " не должна быть пустой");
 		
 		// Получаем размеры:
-		var arr2:Array<Int> = arr[0];
-		if (!Std.is(arr2, Array))
-			throw new Error("Некорректное описание расположения фишек на игровой доске: id=" + item.id + ", ожидался массив с Int, получено: " + arr2);
+		if (!Std.is(arr[0], Array))
+			throw new Error("Некорректное описание расположения фишек на игровой доске: id=" + item.id + ", ожидался массив с Int, получено: " + arr[0]);
 		
-		var height:Int = arr2.length;
-		if (height <= 0)
+		var width:Int = arr[0].length;
+		if (width <= 0)
 			throw new Error("Игровая доска: id=" + item.id + " не должна быть пустой");
 		
 		// Создаём доску:
 		var vec:Vector<Vector<ChipState>> = new Vector(width);
 		
-		// Читаем и заполняем доску:
-		var x:Int = 0;
-		while (x < width) {
-			arr2 = arr[x];
+		// Читаем и заполняем доску: (В данных JSON x и y инвертированы)
+		var y:Int = 0;
+		while (y < height) {
+			var line = arr[y];
+			if (!Std.is(line, Array))
+				throw new Error("Некорректный формат расположения фишек на игровой доске: id=" + item.id + ", ожидался массив, получено: " + line);
+			if (line.length != width)
+				throw new Error("Некорректное описание фишек на игровой доске: id=" + item.id + ", размер всех линий на доске должен быть одинаковым. Линия: " + y + ", ожидаемая длина: " + width + ", получено: " + line.length);
 			
-			if (!Std.is(arr2, Array))
-				throw new Error("Некорректный формат расположения фишек на игровой доске: id=" + item.id + ", ожидался массив, получено: " + arr2);
-			
-			var length = arr2.length;
-			if (length != height)
-				throw new Error("Некорректное описание фишек на игровой доске: id=" + item.id + ", размер всех линий на доске должен быть одинаковым. Линия: " + x + ", ожидаемая длина: " + height + ", получено: " + length);
-			
-			var vec2:Vector<ChipState> = new Vector(height);
-			var y:Int = 0;
-			while (y < height) {
-				vec2[y] = readChipState(arr2[y]);
-				y ++;
+			var x:Int = 0;
+			while (x < width) {
+				var vec2 = vec[x];
+				if (vec2 == null) {
+					vec2	= new Vector<ChipState>(height);
+					vec[x]	= vec2;
+				}
+				
+				vec2[y] = readChipState(line[x]);
+				x ++;
 			}
 			
-			vec[x] = vec2;
-			x ++;
+			y ++;
 		}
 		
 		// Если код выше упадёт, некорректные изменения не будут внесены:
