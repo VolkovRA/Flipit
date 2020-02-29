@@ -14,6 +14,17 @@ import volkovRA.openfl.animation.Animation;
 class ChipButton extends Sprite 
 {
 	/**
+	 * Отступ по ширине. (px)
+	 * Копка имеет центр в середине, это свойство указывает, сколько от центра до крайней левой стороны. (Визуально)
+	 */
+	static public inline var OFFSET_X:Float		= 24;
+	/**
+	 * Отступ по высоте. (px)
+	 * Копка имеет центр в середине, это свойство указывает, сколько от центра до верхней стороны. (Визуально)
+	 */
+	static public inline var OFFSET_Y:Float		= 24;
+	
+	/**
 	 * Состояние фишки.
 	 * По умолчанию: ChipState.BLACK.
 	 */
@@ -48,14 +59,14 @@ class ChipButton extends Sprite
 		sensor.buttonMode	= true;
 		sensor.alpha		= 0;
 		sensor.graphics.beginFill(0xff0000);
-		sensor.graphics.drawRect(-24, -24, 49, 49);
+		sensor.graphics.drawRect(-OFFSET_X, -OFFSET_Y, 49, 49);
 		addChild(sensor);
 		
 		// Черный скин:
 		black				= new Animation();
 		black.fps			= 29;
-		black.x				= -15 - 24;
-		black.y				= -15 - 24;
+		black.x				= -15 - OFFSET_X;
+		black.y				= -15 - OFFSET_Y;
 		black.mouseChildren	= false;
 		black.mouseEnabled	= false;
 		black.repeat		= false;
@@ -73,8 +84,8 @@ class ChipButton extends Sprite
 		// Белый скин:
 		white 				= new Animation();
 		white.fps			= 29;
-		white.x				= -15 - 24;
-		white.y				= -15 - 24;
+		white.x				= -15 - OFFSET_X;
+		white.y				= -15 - OFFSET_Y;
 		white.mouseChildren	= false;
 		white.mouseEnabled	= false;
 		white.repeat		= false;

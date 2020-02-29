@@ -112,8 +112,6 @@ class GameScene extends Scene
 		
 		// Отображалка доски:
 		board					= new BoardView(view);
-		board.x					= 244;
-		board.y					= 202;
 		addChild(board);
 		
 		// Анимация завершения уровня:
@@ -137,6 +135,7 @@ class GameScene extends Scene
 		isPressedSubmit	= false;
 		
 		board.board = view.model.game.board;
+		positioning();
 		
 		// Анимашки
 		// Фейковая, для починки бага:
@@ -239,6 +238,7 @@ class GameScene extends Scene
 	private function onAnimationLevelCompleted():Void {
 		view.model.game.nextLevel();
 		board.playAnimationIn();
+		positioning();
 	}
 	
 	// ПРИВАТ
@@ -247,5 +247,9 @@ class GameScene extends Scene
 	}
 	private function removeGameListeners(game:Game):Void {
 		game.removeEventListener(GameEvent.LEVEL_COMPLETED, onGameLevelComplete);
+	}
+	private function positioning():Void {
+		board.x					= (Settings.DEFAULT_WIDTH / 2) - board.getWidth() / 2;
+		board.y					= (404 / 2 + 76) - board.getHeight() / 2;
 	}
 }

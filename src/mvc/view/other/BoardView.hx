@@ -72,7 +72,7 @@ class BoardView extends AView
 					chip.scaleX		= 1;
 					chip.scaleY		= 1;
 					
-					tween			= Actuate.tween(chip, 0.9, { rotation:0, x:x * CHIP_WIDTH, y:y * CHIP_HEIGHT }).delay(delay);
+					tween			= Actuate.tween(chip, 0.9, { rotation:0, x:getChipX(x), y:getChipX(y) }).delay(delay);
 					
 					delay			+= 0.09;
 					y ++;
@@ -178,8 +178,8 @@ class BoardView extends AView
 					
 					Actuate.stop(chip);
 					
-					chip.x			= CHIP_WIDTH * x;
-					chip.y			= CHIP_HEIGHT * y;
+					chip.x			= getChipX(x);
+					chip.y			= getChipX(y);
 					chip.rotation	= 0;
 					chip.alpha		= 1;
 					chip.scaleX		= 1;
@@ -189,6 +189,28 @@ class BoardView extends AView
 				}
 			}
 		}
+	}
+	/**
+	 * Получить ширину доски, на основе количества тайлов.
+	 * Возвращает фиксированное значение, зависящее только от количества тайлов на доске.
+	 * Нужно для того, чтоб получать корректные размеры, даже когда тайлы двигаются.
+	 */
+	public function getWidth():Float {
+		if (board == null)
+			return 0;
+		
+		return board.width * CHIP_WIDTH;
+	}
+	/**
+	 * Получить высоту доски, на основе количества тайлов.
+	 * Возвращает фиксированное значение, зависящее только от количества тайлов на доске.
+	 * Нужно для того, чтоб получать корректные размеры, даже когда тайлы двигаются.
+	 */
+	public function getHeight():Float {
+		if (board == null)
+			return 0;
+		
+		return board.height * CHIP_HEIGHT;
 	}
 	
 	// ЛИСТЕНЕРЫ
@@ -236,8 +258,8 @@ class BoardView extends AView
 			var indexY = 0;
 			while (indexY < board.height) {
 				var chip		= new ChipButton();
-				chip.x			= CHIP_WIDTH * indexX;
-				chip.y			= CHIP_HEIGHT * indexY;
+				chip.x			= getChipX(indexX);
+				chip.y			= getChipY(indexY);
 				chip.indexX		= indexX;
 				chip.indexY		= indexY;
 				chip.state		= board.getChip(indexX, indexY);
@@ -255,6 +277,12 @@ class BoardView extends AView
 	private function removeBoardListeners(board:Board):Void {
 		board.removeEventListener(BoardEvent.CHANGE, onBoardChange);
 		board.removeEventListener(BoardEvent.CHIP_STATE, onBoardChipState);
+	}
+	private inline function getChipX(indexX):Float {
+		return indexX * CHIP_WIDTH + ChipButton.OFFSET_X;
+	}
+	private inline function getChipY(indexY):Float {
+		return indexY * CHIP_HEIGHT + ChipButton.OFFSET_Y;
 	}
 	
 	// СЕТТЕРЫ
