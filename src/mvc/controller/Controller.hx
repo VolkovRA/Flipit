@@ -76,7 +76,8 @@ class Controller extends AController
 		// Сохранение игры при каждом завершении игрового уровня:
 		controller.model.game.addEventListener(GameEvent.LEVEL_COMPLETED, onLevelCompleted);
 		
-		openAllLevels();
+		// Открыть все уровни:
+		//openAllLevels();
 		
 		// Переходим в главное меню, передаём управление пользователю:
 		view.game.showMainMenu();

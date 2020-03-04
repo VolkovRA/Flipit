@@ -2,6 +2,7 @@ package mvc.view.game;
 
 import mvc.view.View;
 import mvc.view.scene.ChooseLevelScene;
+import mvc.view.scene.FinalScene;
 import mvc.view.scene.GameOverScene;
 import mvc.view.scene.GameScene;
 import mvc.view.scene.MainMenuScene;
@@ -24,6 +25,11 @@ class GameView extends SceneManager
 	 */
 	public var gameOverScene(default, null):GameOverScene;
 	/**
+	 * Финальная сцена.
+	 * Не может быть null.
+	 */
+	public var finalScene(default, null):FinalScene;
+	/**
 	 * Сцена выбора игрового уровня.
 	 * Не может быть null.
 	 */
@@ -45,6 +51,7 @@ class GameView extends SceneManager
 		// Сцены:
 		mainMenuScene		= new MainMenuScene(view);
 		gameOverScene		= new GameOverScene(view);
+		finalScene			= new FinalScene(view);
 		chooseLevelScene	= new ChooseLevelScene(view);
 		gameScene			= new GameScene(view);
 	}
@@ -85,5 +92,14 @@ class GameView extends SceneManager
 			return;
 		
 		showScene(gameOverScene);
+	}
+	/**
+	 * Перейти на финальный экран.
+	 */
+	public function showFinal():Void {
+		if (scene == finalScene)
+			return;
+		
+		showScene(finalScene);
 	}
 }

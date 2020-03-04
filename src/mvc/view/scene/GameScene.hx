@@ -236,9 +236,14 @@ class GameScene extends Scene
 		this.view.game.showGameOver();
 	}
 	private function onAnimationLevelCompleted():Void {
-		view.model.game.nextLevel();
-		board.playAnimationIn();
-		positioning();
+		if (view.model.game.isLastLevel()) {
+			view.game.showFinal();
+		}
+		else {
+			view.model.game.nextLevel();
+			board.playAnimationIn();
+			positioning();
+		}
 	}
 	
 	// ПРИВАТ

@@ -20,20 +20,21 @@ import ui.MoreGamesButton;
 import ui.PlayButton;
 
 /**
- * Сцена завершения игры.
+ * Финальная сцена завершения всей игры.
  * @author VolkovRA
  */
-class GameOverScene extends Scene 
+class FinalScene extends Scene 
 {
 	// Начальные координаты анимируемых объектов. (Их значения известны только после построения)
 	static private var TITLE:Dynamic;
+	static private var TITLE2:Dynamic;
 	static private var PLAYBT:Dynamic;
 	
 	// Приват
 	// Содержимое:
 	private var title:TextField;
+	private var title2:TextField;
 	private var progress:Sprite;
-	private var progressLevel:TextField;
 	private var progressDescr:TextField;
 	private var progressScore:TextField;
 	private var highest:TextField;
@@ -41,7 +42,7 @@ class GameOverScene extends Scene
 	private var btMore:MoreGamesButton;
 	private var bg:Bitmap;
 	// Звуки:
-	private var gameOverSound:Sound;
+	private var sound:Sound;
 	
 	/**
 	 * Создать сцену завершения игры.
@@ -57,7 +58,7 @@ class GameOverScene extends Scene
 		addChild(bg);
 		
 		// Звуки:
-		gameOverSound	= Assets.getSound("assets/sound/game_over.mp3");
+		sound			= Assets.getSound("assets/sound/193.mp3");
 		
 		// Шапка:
 		title						= new TextField();
@@ -65,36 +66,39 @@ class GameOverScene extends Scene
 		title.antiAliasType			= AntiAliasType.ADVANCED;
 		title.autoSize				= TextFieldAutoSize.CENTER;
 		title.x						= 0;
-		title.y						= 75;
+		title.y						= 65;
 		title.width					= 640;
 		title.height				= 75;
 		title.embedFonts			= true;
 		title.selectable			= false;
 		title.multiline				= false;
-		title.text					= "GAME OVER";
-		title.setTextFormat(new TextFormat(null, null, 0xffffff), 5);
+		title.text					= "GAME COMPLETE";
+		title.setTextFormat(new TextFormat(null, null, 0xffffff), 4);
 		addChild(title);
 		TITLE						= { x:title.x, y:title.y, width:title.width, height:title.height };
+		
+		// Приписок:
+		title2						= new TextField();
+		title2.defaultTextFormat	= new TextFormat(Assets.getFont("assets/font/CgBernhardtBd.ttf").fontName, 30, 0xffffff, false, false, false, null, null, TextFormatAlign.CENTER);
+		title2.antiAliasType		= AntiAliasType.ADVANCED;
+		title2.autoSize				= TextFieldAutoSize.CENTER;
+		title2.x					= 0;
+		title2.y					= 135;
+		title2.width				= 640;
+		title2.height				= 75;
+		title2.embedFonts			= true;
+		title2.selectable			= false;
+		title2.multiline			= false;
+		title2.text					= "GREAT! YOU HAVE BEATEN ALL STAGES!";
+		title2.setTextFormat(new TextFormat(null, null, 0x0), 6);
+		addChild(title2);
+		TITLE2						= { x:title2.x, y:title2.y, width:title2.width, height:title2.height };
 		
 		// Прогресс:
 		progress					= new Sprite();
 		progress.x					= 320;
-		progress.y					= 200;
+		progress.y					= 210;
 		addChild(progress);
-		
-		// Прогресс - уровень:
-		progressLevel					= new TextField();
-		progressLevel.defaultTextFormat = new TextFormat(Assets.getFont("assets/font/CgBernhardtBd.ttf").fontName, 25, 0x0);
-		progressLevel.antiAliasType		= AntiAliasType.ADVANCED;
-		progressLevel.autoSize			= TextFieldAutoSize.CENTER;
-		progressLevel.x					= -200;
-		progressLevel.y					= -46;
-		progressLevel.width				= 400;
-		progressLevel.height			= 30;
-		progressLevel.embedFonts		= true;
-		progressLevel.selectable		= false;
-		progressLevel.multiline			= false;
-		progress.addChild(progressLevel);
 		
 		// Прогресс - описание:
 		progressDescr					= new TextField();
@@ -166,7 +170,7 @@ class GameOverScene extends Scene
 	// ЛИСТЕНЕРЫ
 	// Общее:
 	private function onAddedToStage(e:Event):Void {
-		gameOverSound.play();
+		sound.play();
 		update();
 		playAnimation();
 	}
@@ -184,13 +188,8 @@ class GameOverScene extends Scene
 	// ПРИВАТ
 	private function update():Void {
 		var game				= view.model.game;
-		var levelData			= game.data == null ? null : game.data.levels.getItemByID(game.level);
 		
 		// Обновление данных
-		// Достигнутый уровень:
-		progressLevel.text		= "LEVEL: " + (levelData == null ? "--" : Std.string(levelData.num));
-		progressLevel.setTextFormat(new TextFormat(null, null, 0xffffff), 6);
-		
 		// Набранные очки:
 		progressScore.text		= Std.string(game.score);
 		
@@ -213,6 +212,12 @@ class GameOverScene extends Scene
 		title.x			= (TITLE.x + TITLE.width / 2) - (title.width / 2);
 		title.y			= (TITLE.y + TITLE.height / 2) - (title.height / 2);
 		
+		title2.alpha	= 0;
+		title2.scaleX	= scale;
+		title2.scaleY	= scale;
+		title2.x		= (TITLE2.x + TITLE2.width / 2) - (title2.width / 2);
+		title2.y		= (TITLE2.y + TITLE2.height / 2) - (title2.height / 2);
+		
 		progress.alpha	= 0;
 		
 		highest.alpha	= 0;
@@ -228,7 +233,8 @@ class GameOverScene extends Scene
 		var a4			= function():Void {		Actuate.tween(btPlay, 0.4, { x:PLAYBT.x, y:PLAYBT.y, alpha:1, scaleX:1, scaleY:1 }).ease(Back.easeOut); btPlay.visible = true; };
 		var a3			= function():Void {		Actuate.tween(highest, 0.4, { alpha:1 }); a4(); };
 		var a2			= function():Void {		Actuate.tween(progress, 0.7, { alpha:1 }).onComplete(a3); };
-		var a1			= function():Void {		Actuate.tween(title, 0.4, { x:TITLE.x, y:TITLE.y, alpha:1, scaleX:1, scaleY:1 }).ease(Back.easeOut).onComplete(a2); };
+		var a11			= function():Void {		Actuate.tween(title2, 0.4, { x:TITLE2.x, y:TITLE2.y, alpha:1, scaleX:1, scaleY:1 }).ease(Back.easeOut).onComplete(a2); };
+		var a1			= function():Void {		Actuate.tween(title, 0.4, { x:TITLE.x, y:TITLE.y, alpha:1, scaleX:1, scaleY:1 }).ease(Back.easeOut).onComplete(a11); };
 		
 		view.runFakeAnimation(5);
 		

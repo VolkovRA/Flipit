@@ -228,6 +228,21 @@ class Game extends AModel
 		dispatchEvent(new GameEvent(GameEvent.LEVEL_START));
 	}
 	/**
+	 * Проверить, является ли текущий уровень - завершающим.
+	 * Возвращает true, если данный уровень последний в игре и других больше нет.
+	 */
+	public function isLastLevel():Bool {
+		if (_data == null)
+			throw new Error("Данные игры не загружены");
+		
+		// Текущий уровень:
+		var levelData	= _data.levels.getItemByID(_level);
+		if (levelData == null)
+			throw new Error("Отсутствуют данные текущего игрового уровня level=" + _level);
+		
+		return _data.levels.getNextLevel(levelData.num) == null;
+	}
+	/**
 	 * Начать уровень заного.
 	 * Перезапускает текущий уровень.
 	 */
