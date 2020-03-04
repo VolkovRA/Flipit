@@ -20,8 +20,6 @@ import ui.ChipButton;
  */
 class BoardView extends AView 
 {
-	static private inline var CHIP_START_POS_X:Float		= 72;
-	static private inline var CHIP_START_POS_Y:Float		= 350;
 	static private inline var CHIP_WIDTH:Float				= 50;
 	static private inline var CHIP_HEIGHT:Float				= 50;
 	
@@ -65,8 +63,8 @@ class BoardView extends AView
 				var y				= 0;
 				while (y < height) {
 					var chip		= chips[x][y];
-					chip.x			= CHIP_START_POS_X;
-					chip.y			= CHIP_START_POS_Y;
+					chip.x			= getWidth() / 2;
+					chip.y			= getHeight() / 2 + 350;
 					chip.rotation	= x < width / 2 ? -90 : 90;
 					chip.alpha		= 1;
 					chip.scaleX		= 1;
