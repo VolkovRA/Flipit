@@ -13,7 +13,7 @@ class Settings
 	 * Текущая версия игрового приложения.
 	 * Не может быть null.
 	 */
-	static public var VERSION:Version = new Version(0, 1, 0);
+	static public var VERSION:Version = new Version(1, 0, 1);
 	
 	/**
 	 * Выигрышное состояние игровой фишки.
@@ -24,7 +24,7 @@ class Settings
 	/**
 	 * URL Адрес ссылки на кнопке: "Больше игр".
 	 */
-	static public inline var URL_MORE_GAMES:String = "//milkytap.ru/";
+	static public inline var URL_MORE_GAMES:String = "//funnycarrot.ru/";
 	
 	/**
 	 * Размеры экрана (ширина) по умолчанию. (px)
