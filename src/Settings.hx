@@ -13,7 +13,7 @@ class Settings
 	 * Текущая версия игрового приложения.
 	 * Не может быть null.
 	 */
-	static public var VERSION:Version = new Version(1, 0, 1);
+	static public var VERSION:Version = new Version(1, 0, 2);
 	
 	/**
 	 * Выигрышное состояние игровой фишки.

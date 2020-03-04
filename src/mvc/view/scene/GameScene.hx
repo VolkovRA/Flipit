@@ -82,7 +82,7 @@ class GameScene extends Scene
 		hint.embedFonts			= true;
 		hint.selectable			= false;
 		hint.multiline			= false;
-		hint.text				= "flip all the peices to white.";
+		hint.text				= "flip all the pieces to white.";
 		addChild(hint);
 		HINT					= { x:hint.x, y:hint.y };
 		
@@ -236,9 +236,14 @@ class GameScene extends Scene
 		this.view.game.showGameOver();
 	}
 	private function onAnimationLevelCompleted():Void {
-		view.model.game.nextLevel();
-		board.playAnimationIn();
-		positioning();
+		if (view.model.game.isLastLevel()) {
+			view.game.showFinal();
+		}
+		else {
+			view.model.game.nextLevel();
+			board.playAnimationIn();
+			positioning();
+		}
 	}
 	
 	// ПРИВАТ

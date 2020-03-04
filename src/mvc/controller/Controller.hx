@@ -8,6 +8,7 @@ import mvc.model.parser.ParserOptions;
 import mvc.model.game.GameEvent;
 import mvc.view.View;
 import openfl.errors.Error;
+import mvc.model.data.progress.ProgressData;
 
 /**
  * Главный, игровой контроллер.
@@ -75,6 +76,9 @@ class Controller extends AController
 		// Сохранение игры при каждом завершении игрового уровня:
 		controller.model.game.addEventListener(GameEvent.LEVEL_COMPLETED, onLevelCompleted);
 		
+		// Открыть все уровни:
+		//openAllLevels();
+		
 		// Переходим в главное меню, передаём управление пользователю:
 		view.game.showMainMenu();
 	}
@@ -93,6 +97,28 @@ class Controller extends AController
 	public function resetHighest():Void {
 		controller.model.game.highest = 0;
 		controller.model.storage.browser.save(controller.model.game.data, null, OPTIONS_PLAYER);
+	}
+	/**
+	 * Открыть все уровни.
+	 * Функция используется для разработки и не предназначена для использования игроком.
+	 * Открывает все текукщие уровни в игре, помечая их - пройденными.
+	 */
+	public function openAllLevels():Void {
+		var data = controller.model.game.data;
+		
+		for (level in data.levels) {
+			var pr = data.progress.getPlayerOfLevel(Settings.PLAYER_ID, level.id);
+			if (pr == null) {
+				pr			= new ProgressData();
+				pr.id		= ++data.progress.maxID;
+				pr.level	= level.id;
+				pr.player	= Settings.PLAYER_ID;
+				data.progress.add(pr);
+			}
+			pr.completed	= true;
+		}
+		
+		saveProgress();
 	}
 	
 	// ЛИСТЕНЕРЫ
