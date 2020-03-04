@@ -22,7 +22,7 @@ import ui.MoreGamesButton;
  */
 class MainMenuScene extends Scene 
 {
-	static private inline var FAQ_Y:Float = -330;
+	static private inline var FAQ_Y:Float = -340;
 	
 	// Приват
 	// Содержимое:
